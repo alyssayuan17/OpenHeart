@@ -62,7 +62,7 @@ Everything is designed to be easy to swap:
 - **Swiping** — Tinder-style card swiping, instant match on right swipe
 - **Chat** — messaging with chatbot, voice messages (auto-transcribed), text-to-speech
 - **Accessibility** — high-contrast, colorblind-safe, dyslexia-friendly, reduced-motion, large-text themes
-- **Hardware** — haptic heart notification placeholder (match triggers endpoint)
+- **Hardware** — Arduino LCD display shows hearts ❤️ on like, X ❌ on skip (see [ARDUINO_SETUP.md](./arduino/README.md))
 
 ## Accessibility Modes
 
@@ -80,12 +80,14 @@ Toggle from the gear icon (top-right corner, always visible):
 |---|---|---|
 | POST | `/api/chat` | Send messages, get chatbot reply |
 | POST | `/api/tts` | Text-to-speech (ElevenLabs) |
-| POST | `/api/haptic` | Trigger haptic heart hardware |
+| POST | `/api/arduino` | Send like/skip signal to Arduino LCD |
+| GET | `/api/arduino/status` | Check Arduino connection status |
+| POST | `/api/haptic` | Trigger haptic heart hardware (legacy, redirects to `/api/arduino`) |
 | GET | `/api/health` | Health check |
 
 ## Team
 
 - **Alyssa** — Full-stack app development
-- **Renne** — Hardware, characters, frontend polish
+- **Renee** — Hardware, characters, frontend polish
 - **Michelle** — Character illustrations, logo, UI design
 - **Inshal** — Chatbot, AI model integration
