@@ -62,7 +62,7 @@ Everything is designed to be easy to swap:
 - **Swiping** — Tinder-style card swiping, instant match on right swipe
 - **Chat** — messaging with chatbot, voice messages (auto-transcribed), text-to-speech
 - **Accessibility** — high-contrast, colorblind-safe, dyslexia-friendly, reduced-motion, large-text themes
-- **Hardware** — Arduino LCD display shows hearts ❤️ on like, X ❌ on skip (see [ARDUINO_SETUP.md](./ARDUINO_SETUP.md))
+- **Hardware** — Arduino LCD display shows hearts ❤️ on like, X ❌ on skip (see [ARDUINO_SETUP.md](./arduino/README.md))
 
 ## Accessibility Modes
 
