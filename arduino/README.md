@@ -59,7 +59,7 @@ The Arduino listens for serial commands from the Python backend:
 ### LCD shows nothing
 - Re-upload the sketch
 - Check hardware connections
-- Try the simple test sketch in `HARDWARE_DOCS.md`
+- Consult `HARDWARE_DOCS.md` for additional hardware wiring and testing tips
 
 ### Backend can't connect
 - Close Arduino IDE (especially Serial Monitor!)
