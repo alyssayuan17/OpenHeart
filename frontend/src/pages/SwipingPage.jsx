@@ -37,7 +37,7 @@ export default function SwipingPage() {
   // Send signal to Arduino LCD display
   async function sendToArduino(action) {
     try {
-      const response = await fetch('http://localhost:5000/api/arduino', {
+      const response = await fetch('/api/arduino', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action })

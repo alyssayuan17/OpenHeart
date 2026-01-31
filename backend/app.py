@@ -65,27 +65,28 @@ def chat():
         "Ask questions back to keep the conversation going."
     )
 
-    # Try Gemini first
+    # Try Gemini
     api_key = os.getenv("GEMINI_API_KEY")
     if api_key and api_key != "your-gemini-key-here":
-        try:
-            from google import genai
+        from google import genai
+        client = genai.Client(api_key=api_key)
 
-            client = genai.Client(api_key=api_key)
+        # Build conversation history for Gemini
+        contents = [{"role": "user", "parts": [{"text": system_prompt}]}]
+        for m in messages:
+            role = "user" if m["role"] == "user" else "model"
+            contents.append({"role": role, "parts": [{"text": m["content"]}]})
 
-            # Build conversation history for Gemini
-            contents = [{"role": "user", "parts": [{"text": system_prompt}]}]
-            for m in messages:
-                role = "user" if m["role"] == "user" else "model"
-                contents.append({"role": role, "parts": [{"text": m["content"]}]})
-
-            response = client.models.generate_content(
-                model="gemini-2.0-flash",
-                contents=contents,
-            )
-            return jsonify({"reply": response.text})
-        except Exception as e:
-            print(f"[Gemini error] {e}")
+        # Try models in order; fall through on rate-limit or error
+        for model_name in ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-2.0-flash-lite"]:
+            try:
+                response = client.models.generate_content(
+                    model=model_name,
+                    contents=contents,
+                )
+                return jsonify({"reply": response.text})
+            except Exception as e:
+                print(f"[Gemini {model_name} error] {e}")
 
     # Fallback — no API key or error
     return jsonify({"reply": random.choice(FALLBACK_REPLIES)})
@@ -174,4 +175,4 @@ def health():
 if __name__ == "__main__":
     # Debug mode disabled for Arduino compatibility
     # (Flask's auto-reloader conflicts with Arduino serial connection)
-    app.run(debug=False, port=5000)
+    app.run(debug=False, port=5001)
