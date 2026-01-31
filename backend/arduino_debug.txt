@@ -14,3 +14,23 @@
 [2026-01-31 15:14:55] [Arduino] SUCCESSFULLY CONNECTED to COM8
 [2026-01-31 15:15:07] [Arduino DEBUG] Sending command: L
 [2026-01-31 15:15:07] [Arduino] Sent: L
+[2026-01-31 16:43:39] [Arduino] Connecting to COM8...
+[2026-01-31 16:43:42] [Arduino] SUCCESSFULLY CONNECTED to COM8
+[2026-01-31 16:45:03] [Arduino DEBUG] Sending command: L
+[2026-01-31 16:45:03] [Arduino] Sent: L
+[2026-01-31 16:45:12] [Arduino DEBUG] Sending command: D
+[2026-01-31 16:45:12] [Arduino] Sent: D
+[2026-01-31 16:52:30] [Arduino] Connecting to COM8...
+[2026-01-31 16:52:33] [Arduino] SUCCESSFULLY CONNECTED to COM8
+[2026-01-31 16:52:39] [Arduino DEBUG] Sending command: L
+[2026-01-31 16:52:39] [Arduino] Sent: L
+[2026-01-31 17:04:31] [Arduino] Connecting to COM8...
+[2026-01-31 17:04:34] [Arduino] SUCCESSFULLY CONNECTED to COM8
+[2026-01-31 17:04:42] [Arduino DEBUG] Sending command: L
+[2026-01-31 17:04:42] [Arduino] Sent: L
+[2026-01-31 17:09:58] [Arduino] Connecting to COM8...
+[2026-01-31 17:10:01] [Arduino] SUCCESSFULLY CONNECTED to COM8
+[2026-01-31 17:10:07] [Arduino DEBUG] Sending command: L
+[2026-01-31 17:10:07] [Arduino] Sent: L
+[2026-01-31 17:11:51] [Arduino DEBUG] Sending command: L
+[2026-01-31 17:11:51] [Arduino] Sent: L
