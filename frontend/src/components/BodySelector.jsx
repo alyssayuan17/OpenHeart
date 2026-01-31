@@ -88,9 +88,6 @@ const BODIES = [
   },
 ]
 
-// REPLACE: change this color to match your brand / character palette
-const BODY_COLOR = '#E87461'
-
 /*
   OUTFIT ITEMS
   Each item has a category, id, label, and an image path.
@@ -106,130 +103,82 @@ const BODY_COLOR = '#E87461'
 */
 
 const OUTFIT_CATEGORIES = [
-  { id: 'hats', label: 'Hats' },
   { id: 'tops', label: 'Tops' },
-  { id: 'bottoms', label: 'Bottoms' },
   { id: 'shoes', label: 'Shoes' },
-  { id: 'accessories', label: 'Accessories' },
+  { id: 'hands', label: 'Hands' },
 ]
 
 /*
-  PLACEHOLDER OUTFIT DATA
+  OUTFIT DATA
   Each item needs:
     - id: unique string
     - label: display name
-    - image: path to transparent PNG/SVG in /public/outfits/
-    - color: fallback color for the placeholder rectangle
+    - image: path to transparent PNG in /public/outfits/
+    - color: fallback color shown while image loads
 
-  When you have real images, just update the `image` field.
-  The component renders the image if it exists, otherwise
-  shows a colored placeholder block.
+  To add more categories later (hats, bottoms, accessories),
+  add PNGs to /public/outfits/<category>/ and add entries here.
 */
 const OUTFIT_ITEMS = {
-  hats: [
-    { id: 'beanie', label: 'Beanie', image: '/outfits/hats/beanie.png', color: '#5B8CFF' },
-    { id: 'cap', label: 'Cap', image: '/outfits/hats/cap.png', color: '#FF6B6B' },
-    { id: 'headband', label: 'Headband', image: '/outfits/hats/headband.png', color: '#4ECDC4' },
-    { id: 'beret', label: 'Beret', image: '/outfits/hats/beret.png', color: '#F5A623' },
-  ],
   tops: [
-    { id: 'tshirt', label: 'T-Shirt', image: '/outfits/tops/tshirt.png', color: '#5B8CFF' },
-    { id: 'hoodie', label: 'Hoodie', image: '/outfits/tops/hoodie.png', color: '#8B5CF6' },
-    { id: 'jacket', label: 'Jacket', image: '/outfits/tops/jacket.png', color: '#2D2D2D' },
-    { id: 'tank', label: 'Tank Top', image: '/outfits/tops/tank.png', color: '#FF6B6B' },
-  ],
-  bottoms: [
-    { id: 'jeans', label: 'Jeans', image: '/outfits/bottoms/jeans.png', color: '#3B5998' },
-    { id: 'shorts', label: 'Shorts', image: '/outfits/bottoms/shorts.png', color: '#8B6F47' },
-    { id: 'skirt', label: 'Skirt', image: '/outfits/bottoms/skirt.png', color: '#E87461' },
-    { id: 'sweats', label: 'Sweatpants', image: '/outfits/bottoms/sweats.png', color: '#777777' },
+    { id: 'blue_top', label: 'Blue Top', image: '/outfits/tops/blue_top.PNG', color: '#5B8CFF' },
+    { id: 'pink_top', label: 'Pink Top', image: '/outfits/tops/pink_top.PNG', color: '#FF69B4' },
+    { id: 'yellow_top', label: 'Yellow Top', image: '/outfits/tops/yellow_top.PNG', color: '#F5A623' },
   ],
   shoes: [
-    { id: 'sneakers', label: 'Sneakers', image: '/outfits/shoes/sneakers.png', color: '#FFFFFF' },
-    { id: 'boots', label: 'Boots', image: '/outfits/shoes/boots.png', color: '#5C3A1E' },
-    { id: 'sandals', label: 'Sandals', image: '/outfits/shoes/sandals.png', color: '#D4A574' },
+    { id: 'green_shoes', label: 'Green Shoes', image: '/outfits/shoes/green_shoes.PNG', color: '#66BB6A' },
+    { id: 'purple_shoes', label: 'Purple Shoes', image: '/outfits/shoes/purple_shoes.PNG', color: '#AB47BC' },
+    { id: 'yellow_shoes', label: 'Yellow Shoes', image: '/outfits/shoes/yellow_shoes.PNG', color: '#F5A623' },
   ],
-  accessories: [
-    { id: 'glasses', label: 'Glasses', image: '/outfits/accessories/glasses.png', color: '#2D2D2D' },
-    { id: 'necklace', label: 'Necklace', image: '/outfits/accessories/necklace.png', color: '#FFD700' },
-    { id: 'scarf', label: 'Scarf', image: '/outfits/accessories/scarf.png', color: '#E87461' },
-    { id: 'watch', label: 'Watch', image: '/outfits/accessories/watch.png', color: '#C0C0C0' },
+  hands: [
+    { id: 'black_skin', label: 'Dark', image: '/outfits/hands/black_skin.png', color: '#3B2219', square: true },
+    { id: 'brown_skin', label: 'Brown', image: '/outfits/hands/brown_skin.png', color: '#8D5524', square: true },
+    { id: 'white_skin', label: 'Light', image: '/outfits/hands/white_skin.png', color: '#FFDBAC', square: true },
   ],
 }
 
 /*
-  Layer order — controls which items render on top.
-  Items later in the array render on top of earlier ones.
+  The outfit PNGs are full-body-sized illustrations drawn to match
+  the body silhouettes. Each layer covers the full body container
+  and relies on the PNG transparency to only show the relevant part.
+  REPLACE: if your images only cover part of the body, switch back
+  to per-category position offsets.
 */
-const LAYER_ORDER = ['bottoms', 'shoes', 'tops', 'accessories', 'hats']
+function OutfitImage({ item }) {
+  if (!item) return null
 
-/*
-  Position offsets for each category layer on the body preview.
-  These align the outfit images with the placeholder body SVGs.
-  REPLACE: adjust these when you have real illustrations to get
-  pixel-perfect alignment.
-*/
-const LAYER_POSITIONS = {
-  hats:        { top: -10, left: 22, width: 56, height: 40 },
-  tops:        { top: 55,  left: 10, width: 80, height: 55 },
-  bottoms:     { top: 100, left: 18, width: 64, height: 55 },
-  shoes:       { top: 148, left: 18, width: 64, height: 30 },
-  accessories: { top: 40,  left: 20, width: 60, height: 40 },
-}
-
-function OutfitLayer({ item, category }) {
-  const pos = LAYER_POSITIONS[category]
-  if (!item || !pos) return null
-
-  return (
-    <div
-      className="outfit-layer"
-      style={{
+  /*
+    Square hand PNGs (2048x2048) have hands at ~35% from top.
+    Portrait PNGs (1668x2388) have hands at ~60% from top.
+    For square images, we scale them up and shift down so the hands
+    align with the same position as the portrait ones.
+  */
+  const style = item.square
+    ? {
         position: 'absolute',
-        top: pos.top,
-        left: pos.left,
-        width: pos.width,
-        height: pos.height,
+        top: '20%',
+        left: '-18%',
+        width: '138%',
+        height: 'auto',
+        aspectRatio: '1 / 1',
+        objectFit: 'contain',
         pointerEvents: 'none',
-      }}
-    >
-      {/* Try to load the real image; show colored placeholder on error */}
-      <img
-        src={item.image}
-        alt={item.label}
-        style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-        onError={(e) => {
-          // Hide broken image, show placeholder
-          e.target.style.display = 'none'
-          e.target.nextSibling.style.display = 'flex'
-        }}
-      />
-      <div
-        className="outfit-placeholder"
-        style={{
-          display: 'none',
-          width: '100%',
-          height: '100%',
-          background: item.color,
-          borderRadius: 6,
-          opacity: 0.8,
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: 10,
-          color: '#fff',
-          fontWeight: 600,
-          textAlign: 'center',
-        }}
-      >
-        {item.label}
-      </div>
-    </div>
-  )
+      }
+    : {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        objectFit: 'contain',
+        pointerEvents: 'none',
+      }
+
+  return <img src={item.image} alt={item.label} style={style} />
 }
 
 export default function BodySelector({ headImage, onHeadImageChange, outfit, onOutfitChange }) {
-  const [selectedBody, setSelectedBody] = useState('casual')
-  const [activeCategory, setActiveCategory] = useState('hats')
+  const [activeCategory, setActiveCategory] = useState('tops')
   const [cameraOpen, setCameraOpen] = useState(false)
   const fileInputRef = useRef()
   const videoRef = useRef()
@@ -237,11 +186,9 @@ export default function BodySelector({ headImage, onHeadImageChange, outfit, onO
 
   // If parent doesn't manage outfit state, manage it locally
   const [localOutfit, setLocalOutfit] = useState({
-    hats: null,
     tops: null,
-    bottoms: null,
     shoes: null,
-    accessories: null,
+    hands: null,
   })
 
   const currentOutfit = outfit || localOutfit
@@ -353,13 +300,13 @@ export default function BodySelector({ headImage, onHeadImageChange, outfit, onO
     }))
   }
 
-  const activeBody = BODIES.find((b) => b.id === selectedBody)
   const categoryItems = OUTFIT_ITEMS[activeCategory] || []
 
   return (
     <>
-      {/* Main preview: head + body + outfit layers */}
+      {/* Character preview: head + body (tops/hands) + shoes */}
       <div className="body-selector__preview">
+        {/* Head circle — positioned to overlap the top of the body area */}
         <div className="body-selector__head">
           {headImage ? (
             <img src={headImage} alt="Your profile" />
@@ -367,29 +314,25 @@ export default function BodySelector({ headImage, onHeadImageChange, outfit, onO
             '?'
           )}
         </div>
-        <div className="body-selector__body-svg">
-          {activeBody?.svg(BODY_COLOR)}
-          {/* Outfit layers rendered in order */}
-          {LAYER_ORDER.map((cat) => (
-            <OutfitLayer key={cat} item={currentOutfit[cat]} category={cat} />
-          ))}
+
+        {/* Body area — tops and hands share the same canvas (1668x2388) */}
+        <div className="body-selector__body-area">
+          <OutfitImage item={currentOutfit.hands} />
+          <OutfitImage item={currentOutfit.tops} />
         </div>
+
+        {/* Shoes — separate square image below the body */}
+        {currentOutfit.shoes && (
+          <div className="body-selector__shoes">
+            <img
+              src={currentOutfit.shoes.image}
+              alt={currentOutfit.shoes.label}
+              style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+            />
+          </div>
+        )}
       </div>
 
-      {/* Body choices */}
-      <div className="body-options">
-        {BODIES.map((body) => (
-          <button
-            key={body.id}
-            className={`body-option-btn ${selectedBody === body.id ? 'selected' : ''}`}
-            onClick={() => setSelectedBody(body.id)}
-            title={body.label}
-            aria-label={`Select ${body.label} body`}
-          >
-            {body.svg(selectedBody === body.id ? BODY_COLOR : '#CCCCCC')}
-          </button>
-        ))}
-      </div>
 
       {/* Camera modal */}
       {cameraOpen && (
