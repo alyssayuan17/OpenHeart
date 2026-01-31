@@ -215,7 +215,7 @@ def connect(self):
                 baudrate=9600,       # Must match Arduino
                 timeout=1            # 1 second timeout
             )
-            time.sleep(2)  # 👈 IMPORTANT! Arduino resets on connection
+            time.sleep(3)  # 👈 IMPORTANT! Arduino resets on connection
             self.is_connected = True
             return True
     except serial.SerialException as e:
