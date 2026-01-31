@@ -77,7 +77,7 @@ def main():
                 
                 print("    Sending SKIP... ❌")
                 arduino.send_skip()
-                time.sleep(1.5)  # Wait for display to reset (1s delay + 0.5s buffer)
+                time.sleep(3.5)  # Wait for display to reset (3s delay + 0.5s buffer)
             
             print("\n✅ Test sequence complete!")
         
