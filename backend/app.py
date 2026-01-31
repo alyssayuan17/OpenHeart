@@ -132,11 +132,19 @@ def arduino_notify():
     success = False
     message = ""
     
+    print(f"[API DEBUG] Received action: {action}")
+    import sys
+    sys.stdout.flush()
+    
     if action == "like" or action == "match":
+        print("[API DEBUG] Calling send_like()...")
         success = arduino.send_like()
+        print(f"[API DEBUG] send_like returned: {success}")
         message = "Like signal sent to Arduino LCD (Heart display)"
     elif action == "skip" or action == "dislike":
+        print("[API DEBUG] Calling send_skip()...")
         success = arduino.send_skip()
+        print(f"[API DEBUG] send_skip returned: {success}")
         message = "Skip signal sent to Arduino LCD (X display)"
     else:
         return jsonify({
@@ -189,4 +197,6 @@ def health():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    # Debug mode disabled for Arduino compatibility
+    # (Flask's auto-reloader conflicts with Arduino serial connection)
+    app.run(debug=False, port=5000)

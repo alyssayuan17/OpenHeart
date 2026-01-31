@@ -73,66 +73,70 @@ class ArduinoLCDService:
         
         return None
     
+    def log(self, message):
+        """Log to file and console to avoid buffering issues."""
+        timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
+        msg = f"[{timestamp}] {message}"
+        print(msg)
+        try:
+            with open("arduino_debug.txt", "a") as f:
+                f.write(msg + "\n")
+        except:
+            pass
+
     def connect(self) -> bool:
         """
-        Establish connection to Arduino.
-        
-        Returns:
-            True if connection successful, False otherwise
+        Establish persistent connection to Arduino.
         """
         if not self.port:
-            print("[Arduino] No port specified. Cannot connect.")
+            self.log("[Arduino] No port specified. Cannot connect.")
             return False
         
         try:
             with self.lock:
+                if self.serial_port and self.serial_port.is_open:
+                    return True # Already connected
+
+                self.log(f"[Arduino] Connecting to {self.port}...")
                 self.serial_port = serial.Serial(
                     port=self.port,
                     baudrate=self.baud_rate,
                     timeout=self.timeout
                 )
-                # Wait for Arduino to reset (it resets when serial connection opens)
-                time.sleep(2)
+                # Wait for Arduino to reset (essential for Uno R4/R3)
+                time.sleep(3.0)
                 self.is_connected = True
-                print(f"[Arduino] Connected to {self.port} at {self.baud_rate} baud")
+                self.log(f"[Arduino] SUCCESSFULLY CONNECTED to {self.port}")
                 return True
         except serial.SerialException as e:
-            print(f"[Arduino] Connection failed: {e}")
+            self.log(f"[Arduino] Connection failed: {e}")
             self.is_connected = False
             return False
-    
-    def disconnect(self):
-        """Close the serial connection."""
-        with self.lock:
-            if self.serial_port and self.serial_port.is_open:
-                self.serial_port.close()
-                self.is_connected = False
-                print("[Arduino] Disconnected")
-    
+
     def send_command(self, command: str) -> bool:
         """
-        Send a single character command to Arduino.
-        
-        Args:
-            command: Single character command ('L' or 'D')
-            
-        Returns:
-            True if sent successfully, False otherwise
+        Send a single character command to Arduino using persistent connection.
         """
-        if not self.is_connected or not self.serial_port:
-            print("[Arduino] Not connected. Cannot send command.")
-            return False
+        self.log(f"[Arduino DEBUG] Sending command: {command}")
+        
+        if not self.is_connected or not self.serial_port or not self.serial_port.is_open:
+            self.log("[Arduino] Connection lost. Reconnecting...")
+            if not self.connect():
+                return False
         
         try:
             with self.lock:
-                # Send the command
                 self.serial_port.write(command.encode())
                 self.serial_port.flush()
-                print(f"[Arduino] Sent command: {command}")
+                self.log(f"[Arduino] Sent: {command}")
                 return True
-        except serial.SerialException as e:
-            print(f"[Arduino] Error sending command: {e}")
+        except Exception as e:
+            self.log(f"[Arduino] Error sending: {e}")
             self.is_connected = False
+            try:
+                self.serial_port.close()
+            except:
+                pass
             return False
     
     def send_like(self) -> bool:
