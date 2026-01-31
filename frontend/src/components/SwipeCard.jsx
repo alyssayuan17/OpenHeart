@@ -1,8 +1,20 @@
+// Unique gradient per card so you can tell them apart
+const GRADIENTS = [
+  'linear-gradient(135deg, #FDE8E4 0%, #4ECDC4 100%)',
+  'linear-gradient(135deg, #E0F0FF 0%, #5B8CFF 100%)',
+  'linear-gradient(135deg, #FFF3E0 0%, #F5A623 100%)',
+  'linear-gradient(135deg, #E8F5E9 0%, #66BB6A 100%)',
+  'linear-gradient(135deg, #F3E5F5 0%, #AB47BC 100%)',
+  'linear-gradient(135deg, #FCE4EC 0%, #EF5350 100%)',
+]
+
 export default function SwipeCard({ profile }) {
+  const gradient = GRADIENTS[(profile.id - 1) % GRADIENTS.length]
+
   return (
     <div className="swipe-card">
       {/* REPLACE: swap this gradient placeholder with a real profile photo */}
-      <div className="swipe-card__photo">
+      <div className="swipe-card__photo" style={{ background: gradient }}>
         <div className="swipe-card__photo-placeholder">
           {profile.emoji || '?'}
         </div>

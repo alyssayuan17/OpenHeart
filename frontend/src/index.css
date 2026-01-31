@@ -485,6 +485,38 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
   gap: 8px;
 }
 
+/* Camera modal */
+.camera-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+}
+.camera-modal__content {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 400px;
+  width: 90%;
+}
+.camera-modal__video {
+  width: 100%;
+  border-radius: var(--radius);
+  transform: scaleX(-1);
+  background: #000;
+}
+.camera-modal__actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
 /* ============================================
    OUTFIT PICKER
    ============================================ */
