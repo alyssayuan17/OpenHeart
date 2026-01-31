@@ -1,0 +1,5 @@
+.env
+__pycache__
+*.pyc
+static/tts_output.mp3
+venv/
