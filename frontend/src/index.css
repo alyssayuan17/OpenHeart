@@ -451,7 +451,7 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
   font-size: 40px;
   color: var(--color-primary);
   font-weight: 700;
-  margin-bottom: -30px;
+  margin-bottom: -200px;
 }
 .body-selector__head img {
   width: 100%;
