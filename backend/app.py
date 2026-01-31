@@ -9,14 +9,30 @@ Endpoints:
 
 import os
 import random
+import atexit
+import logging
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
+from arduino_service import get_arduino_service, cleanup_arduino_service
 
 load_dotenv()
 
+# Configure logging
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
 app = Flask(__name__)
 CORS(app)
+
+# Initialize Arduino LCD Service
+arduino = get_arduino_service()
+
+# Clean up Arduino connection on app shutdown
+atexit.register(cleanup_arduino_service)
 
 
 # ---------- Chatbot ----------
@@ -75,28 +91,77 @@ def chat():
     return jsonify({"reply": random.choice(FALLBACK_REPLIES)})
 
 
-# ---------- Hardware Haptic Heart (placeholder) ----------
+# ---------- Hardware Arduino LCD Display ----------
+
+@app.route("/api/arduino", methods=["POST"])
+def arduino_notify():
+    """
+    Send like/skip signals to Arduino LCD display.
+    
+    Expected JSON:
+    {
+        "action": "like" or "skip"
+    }
+    """
+    data = request.get_json()
+    action = data.get("action", "").lower()
+    
+    success = False
+    message = ""
+    
+    logger.debug(f"Received action: {action}")
+    
+    if action == "like" or action == "match":
+        logger.debug("Calling send_like()...")
+        success = arduino.send_like()
+        logger.debug(f"send_like returned: {success}")
+        message = "Like signal sent to Arduino LCD (Heart display)"
+    elif action == "skip" or action == "dislike":
+        logger.debug("Calling send_skip()...")
+        success = arduino.send_skip()
+        logger.debug(f"send_skip returned: {success}")
+        message = "Skip signal sent to Arduino LCD (X display)"
+    else:
+        return jsonify({
+            "success": False,
+            "message": f"Invalid action: {action}. Use 'like' or 'skip'.",
+            "hardware_connected": arduino.is_connected
+        }), 400
+    
+    status = arduino.get_status()
+    
+    logger.info(f"Arduino action: {action}, Success: {success}, Connected: {status['connected']}")
+    
+    return jsonify({
+        "success": success,
+        "message": message,
+        "hardware_connected": status['connected'],
+        "port": status['port'],
+        "action": action
+    })
+
+
+@app.route("/api/arduino/status", methods=["GET"])
+def arduino_status():
+    """Get Arduino connection status."""
+    status = arduino.get_status()
+    return jsonify(status)
+
+
+# ---------- Legacy Haptic Endpoint (kept for backwards compatibility) ----------
 
 @app.route("/api/haptic", methods=["POST"])
 def haptic_notify():
+    """Legacy endpoint - redirects to /api/arduino"""
     data = request.get_json()
     action = data.get("action", "match")
-
-    # TODO: Replace with actual hardware communication
-    # For Arduino/ESP32 over serial:
-    #   import serial
-    #   ser = serial.Serial('/dev/ttyUSB0', 9600)
-    #   ser.write(b'MATCH\n')
-    #
-    # For BLE:
-    #   Use bleak library to send notification to heart device
-
-    print(f"[HARDWARE] Haptic notification triggered: {action}")
-
-    return jsonify({
-        "message": f"Haptic notification: {action}",
-        "hardware_connected": False,
-    })
+    
+    # Map legacy actions to new format
+    if action == "match":
+        action = "like"
+    
+    # Forward to arduino endpoint
+    return arduino_notify()
 
 
 # ---------- Health check ----------
@@ -107,4 +172,6 @@ def health():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    # Debug mode disabled for Arduino compatibility
+    # (Flask's auto-reloader conflicts with Arduino serial connection)
+    app.run(debug=False, port=5000)

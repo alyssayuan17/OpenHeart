@@ -1,0 +1,16 @@
+[2026-01-31 15:07:53] [Arduino] Connecting to COM8...
+[2026-01-31 15:07:56] [Arduino] SUCCESSFULLY CONNECTED to COM8
+[2026-01-31 15:10:20] [Arduino] Connecting to COM8...
+[2026-01-31 15:10:23] [Arduino] SUCCESSFULLY CONNECTED to COM8
+[2026-01-31 15:10:46] [Arduino DEBUG] Sending command: L
+[2026-01-31 15:10:46] [Arduino] Sent: L
+[2026-01-31 15:10:54] [Arduino DEBUG] Sending command: L
+[2026-01-31 15:10:54] [Arduino] Sent: L
+[2026-01-31 15:13:14] [Arduino] Connecting to COM8...
+[2026-01-31 15:13:17] [Arduino] SUCCESSFULLY CONNECTED to COM8
+[2026-01-31 15:13:31] [Arduino DEBUG] Sending command: L
+[2026-01-31 15:13:31] [Arduino] Sent: L
+[2026-01-31 15:14:52] [Arduino] Connecting to COM8...
+[2026-01-31 15:14:55] [Arduino] SUCCESSFULLY CONNECTED to COM8
+[2026-01-31 15:15:07] [Arduino DEBUG] Sending command: L
+[2026-01-31 15:15:07] [Arduino] Sent: L

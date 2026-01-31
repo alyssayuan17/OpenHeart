@@ -19,12 +19,39 @@ export default function SwipingPage() {
     setGone((prev) => [...prev, profile.id])
 
     if (direction === 'right') {
+      // Send 'like' signal to Arduino
+      sendToArduino('like')
+
       setCurrentMatch(profile)
       setMatchPopup(profile)
       setTimeout(() => {
         setMatchPopup(null)
         navigate(`/chat/${profile.id}`)
       }, 2000)
+    } else if (direction === 'left') {
+      // Send 'skip' signal to Arduino
+      sendToArduino('skip')
+    }
+  }
+
+  // Send signal to Arduino LCD display
+  async function sendToArduino(action) {
+    try {
+      const response = await fetch('http://localhost:5000/api/arduino', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action })
+      })
+      const data = await response.json()
+      console.log(`[Arduino] ${action}:`, data)
+
+      // Log if Arduino is not connected (but don't block the UI)
+      if (!data.hardware_connected) {
+        console.warn('[Arduino] Hardware not connected. LCD display unavailable.')
+      }
+    } catch (error) {
+      console.error('[Arduino] Failed to send signal:', error)
+      // Don't block the UI - Arduino is optional
     }
   }
 
