@@ -81,7 +81,8 @@ class ArduinoLCDService:
         try:
             with open("arduino_debug.txt", "a") as f:
                 f.write(msg + "\n")
-        except:
+        except Exception:
+            # Intentionally ignore logging errors to avoid impacting main application flow
             pass
 
     def connect(self) -> bool:
