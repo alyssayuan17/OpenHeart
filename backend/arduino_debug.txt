@@ -58,3 +58,7 @@
 [2026-01-31 18:13:13] [Arduino] SUCCESSFULLY CONNECTED to /dev/cu.debug-console
 [2026-01-31 18:16:21] [Arduino DEBUG] Sending command: L
 [2026-01-31 18:16:21] [Arduino] Sent: L
+[2026-01-31 18:19:20] [Arduino DEBUG] Sending command: L
+[2026-01-31 18:19:20] [Arduino] Sent: L
+[2026-01-31 18:20:16] [Arduino DEBUG] Sending command: L
+[2026-01-31 18:20:16] [Arduino] Sent: L
