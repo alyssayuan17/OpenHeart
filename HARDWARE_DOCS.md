@@ -215,7 +215,7 @@ def connect(self):
                 baudrate=9600,       # Must match Arduino
                 timeout=1            # 1 second timeout
             )
-            time.sleep(2)  # 👈 IMPORTANT! Arduino resets on connection
+            time.sleep(3)  # 👈 IMPORTANT! Arduino resets on connection
             self.is_connected = True
             return True
     except serial.SerialException as e:
@@ -224,9 +224,9 @@ def connect(self):
         return False
 ```
 
-**Why the 2-second delay?**
+**Why the 3-second delay?**
 - When you open a serial connection, the Arduino RESETS automatically
-- It takes ~2 seconds to boot up
+- It takes ~3 seconds to boot up
 - If we send data immediately, the Arduino won't be ready to receive it
 
 ### Disconnecting
