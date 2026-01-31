@@ -88,6 +88,6 @@ Toggle from the gear icon (top-right corner, always visible):
 ## Team
 
 - **Alyssa** — Full-stack app development
-- **Renne** — Hardware, characters, frontend polish
+- **Renee** — Hardware, characters, frontend polish
 - **Michelle** — Character illustrations, logo, UI design
 - **Inshal** — Chatbot, AI model integration
