@@ -12,14 +12,14 @@
 
 :root {
   /* REPLACE: Brand colors */
-  --color-primary: #E87461;
-  --color-primary-hover: #D4634F;
-  --color-primary-light: #FDE8E4;
-  --color-secondary: #F5A623;
+  --color-primary: #FF8DB1;
+  --color-primary-hover: #dd5358;
+  --color-primary-light: #FFDBE6;
+  --color-secondary: #dd5358;
   --color-accent: #4ECDC4;
 
   /* REPLACE: Background & surface */
-  --color-bg: #FFF5F5;
+  --color-bg: #FFDBE6;
   --color-surface: #FFFFFF;
   --color-surface-alt: #F8F8F8;
 
@@ -30,7 +30,7 @@
 
   /* REPLACE: Utility colors */
   --color-border: #E0E0E0;
-  --color-error: #E74C3C;
+  --color-error: #dd5358;
   --color-success: #2ECC71;
   --color-match: #FF6B6B;
   --color-no-match: #95A5A6;
@@ -174,11 +174,11 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
 
 .btn-ghost {
   background: transparent;
-  color: var(--color-text-secondary);
+  color: #FF8DB1;
   border: none;
   padding: 8px 12px;
 }
-.btn-ghost:hover { color: var(--color-text); background: var(--color-surface-alt); }
+.btn-ghost:hover { color: #FF8DB1; background: var(--color-surface-alt); }
 
 .btn-icon {
   width: 44px;
@@ -186,14 +186,14 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
   padding: 0;
   border-radius: var(--radius-full);
   border: none;
-  background: var(--color-surface-alt);
-  color: var(--color-text);
+  background: #FFDBE6;
+  color: #FF8DB1;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all var(--transition);
 }
-.btn-icon:hover { background: var(--color-primary-light); color: var(--color-primary); }
+.btn-icon:hover { background: var(--color-primary-light); color: #FF8DB1; }
 
 .form-group {
   display: flex;
@@ -278,6 +278,10 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
   z-index: 100;
 }
 .top-nav__left { display: flex; align-items: center; }
+.top-nav__logo {
+  height: 24px;
+  width: auto;
+}
 .top-nav__title {
   font-family: var(--font-heading);
   font-size: var(--font-size-lg);
@@ -344,21 +348,44 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
   max-width: 420px;
   text-align: center;
 }
+
+@keyframes logoJumpWiggle {
+  0% { transform: translateX(-5px) translateY(0); }
+  25% { transform: translateX(-5px) translateY(-15px); }
+  40% { transform: translateX(-10px) translateY(-15px); }
+  55% { transform: translateX(0px) translateY(-15px); }
+  70% { transform: translateX(-5px) translateY(-15px); }
+  100% { transform: translateX(-5px) translateY(0); }
+}
+
 .login-card__logo {
-  width: 80px;
-  height: 80px;
+  width: 120px;
+  height: 120px;
   margin: 0 auto 16px;
-  background: var(--color-primary-light);
-  border-radius: var(--radius-full);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 36px;
-  color: var(--color-primary);
+  overflow: hidden;
+  transform: translateX(-5px);
+  cursor: pointer;
+}
+.login-card__logo:hover {
+  animation: logoJumpWiggle 0.6s ease-in-out;
+}
+.login-card__logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 .login-card h1 {
   font-family: var(--font-heading);
   font-size: var(--font-size-xl);
+  margin-bottom: 8px;
+}
+.login-card__text-logo {
+  max-width: 200px;
+  height: auto;
   margin-bottom: 8px;
 }
 .login-card p {

@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Heart } from 'lucide-react'
 import { useApp } from '../context/AppContext'
 
 export default function LoginPage() {
@@ -22,13 +21,12 @@ export default function LoginPage() {
   return (
     <div className="login-page">
       <div className="login-card">
-        {/* REPLACE: swap this placeholder with your actual logo */}
         <div className="login-card__logo">
-          <Heart size={40} />
+          <img src="/logo.png" alt="OpenHeart Logo" />
         </div>
 
-        <h1>OpenHeart</h1>
-        <p>Love without limits.</p>
+        <img src="/logo_text.png" alt="OpenHeart" className="login-card__text-logo" />
+        <p>Dating built on empathy.</p>
 
         <form onSubmit={handleLogin}>
           <div className="form-group">

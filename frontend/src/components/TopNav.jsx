@@ -18,7 +18,7 @@ export default function TopNav() {
   return (
     <nav className="top-nav">
       <div className="top-nav__left">
-        <span className="top-nav__title">OpenHeart</span>
+        <img src="/logo_text.png" alt="OpenHeart" className="top-nav__logo" />
       </div>
 
       <div className="top-nav__right">
