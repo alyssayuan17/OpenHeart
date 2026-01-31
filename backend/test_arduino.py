@@ -73,7 +73,7 @@ def main():
                 
                 print("    Sending LIKE... ❤️")
                 arduino.send_like()
-                time.sleep(2.5)  # Wait for display to reset (2s delay + 0.5s buffer)
+                time.sleep(3.5)  # Wait for display to reset (3s delay + 0.5s buffer)
                 
                 print("    Sending SKIP... ❌")
                 arduino.send_skip()
