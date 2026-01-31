@@ -3,6 +3,9 @@
 
 rgb_lcd lcd;
 
+// --- Pin Definitions ---
+const int BUZZER_PIN = 5;  // Grove buzzer on D5
+
 // --- Color Definitions (R, G, B) ---
 const int colorLike[3] = {255, 0, 100};   // Bright Pink
 const int colorSkip[3] = {0, 0, 255};     // Bright Blue
@@ -36,6 +39,10 @@ byte xIcon[8] = {
 void setup() {
     Wire.begin();
     Serial.begin(9600);
+
+    // Initialize buzzer pin
+    pinMode(BUZZER_PIN, OUTPUT);
+    digitalWrite(BUZZER_PIN, LOW);
 
     lcd.begin(16, 2);
     
@@ -81,8 +88,16 @@ void displayLike() {
     lcd.write((unsigned char)0);
     lcd.write((unsigned char)0);
     
-    // Hold for 3 seconds
-    delay(3000);
+    // 4. Play Match Sound - Happy celebration buzz!
+    for (int i = 0; i < 3; i++) {
+        tone(BUZZER_PIN, 500);  // Play 1000 Hz tone
+        delay(500);
+        noTone(BUZZER_PIN);
+        delay(100);
+    }
+    
+    // Hold for remaining time
+    delay(2250);
     resetScreen();
 }
 
