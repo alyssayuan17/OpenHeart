@@ -250,3 +250,99 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
   font-family: var(--font-heading);
   color: var(--color-primary);
 }
+
+/* ============================================
+   ACCESSIBILITY MENU
+   ============================================ */
+
+.a11y-menu {
+  position: relative;
+}
+.a11y-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: 8px;
+  min-width: 220px;
+  z-index: 200;
+}
+.a11y-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  border-radius: 8px;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background var(--transition);
+}
+.a11y-option:hover { background: var(--color-surface-alt); }
+.a11y-option.active { background: var(--color-primary-light); color: var(--color-primary); font-weight: 600; }
+
+/* ============================================
+   LOGIN PAGE
+   ============================================ */
+
+.login-page {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.login-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+}
+.login-card__logo {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 16px;
+  background: var(--color-primary-light);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  color: var(--color-primary);
+}
+.login-card h1 {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-xl);
+  margin-bottom: 8px;
+}
+.login-card p {
+  color: var(--color-text-secondary);
+  margin-bottom: 32px;
+}
+.login-card .form-group { margin-bottom: 16px; text-align: left; }
+.login-card .btn-primary { width: 100%; margin-top: 8px; }
+.login-card__footer {
+  margin-top: 24px;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+.login-card__footer button {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-weight: 600;
+  cursor: pointer;
+  font-size: inherit;
+}
+.login-card__footer button:hover { text-decoration: underline; }
