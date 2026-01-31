@@ -10,7 +10,6 @@ export default function SwipingPage() {
   const navigate = useNavigate()
   const { setCurrentMatch } = useApp()
   const [gone, setGone] = useState([])
-  const [leftScreen, setLeftScreen] = useState([])
   const [matchPopup, setMatchPopup] = useState(null)
 
   const profiles = useMemo(() => [...dummyProfiles].reverse(), [])
@@ -73,7 +72,7 @@ export default function SwipingPage() {
       {allGone ? (
         <div className="no-more-cards">
           <p>No more profiles right now. Check back later!</p>
-          <button className="btn btn-primary" onClick={() => { setGone([]); setLeftScreen([]) }}>
+          <button className="btn btn-primary" onClick={() => setGone([])}>
             Reset Cards
           </button>
         </div>
@@ -81,14 +80,15 @@ export default function SwipingPage() {
         <>
           <div className="card-stack">
             {profiles.map((profile, i) => {
-              if (leftScreen.includes(profile.id)) return null
+              if (gone.includes(profile.id)) return null
               return (
                 <TinderCard
                   key={profile.id}
                   ref={(el) => (cardRefs.current[i] = el)}
                   onSwipe={(dir) => onSwipe(dir, profile)}
-                  onCardLeftScreen={() => setLeftScreen((prev) => [...prev, profile.id])}
                   preventSwipe={['up', 'down']}
+                  swipeRequirementType="position"
+                  swipeThreshold={100}
                 >
                   <SwipeCard profile={profile} />
                 </TinderCard>
