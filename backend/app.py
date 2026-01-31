@@ -11,12 +11,20 @@ Endpoints:
 import os
 import random
 import atexit
+import logging
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
 from arduino_service import get_arduino_service, cleanup_arduino_service
 
 load_dotenv()
+
+# Configure logging
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 CORS(app)
@@ -74,7 +82,7 @@ def chat():
             )
             return jsonify({"reply": response.choices[0].message.content})
         except Exception as e:
-            print(f"[OpenAI error] {e}")
+            logger.error(f"OpenAI error: {e}")
 
     # Fallback — no API key or error
     return jsonify({"reply": random.choice(FALLBACK_REPLIES)})
@@ -108,7 +116,7 @@ def text_to_speech():
                     f.write(response.content)
                 return jsonify({"audio_url": f"/static/tts_output.mp3"})
         except Exception as e:
-            print(f"[ElevenLabs error] {e}")
+            logger.error(f"ElevenLabs error: {e}")
 
     # Fallback — tell frontend to use browser TTS
     return jsonify({"audio_url": None, "fallback": "browser", "text": text})
@@ -132,19 +140,17 @@ def arduino_notify():
     success = False
     message = ""
     
-    print(f"[API DEBUG] Received action: {action}")
-    import sys
-    sys.stdout.flush()
+    logger.debug(f"Received action: {action}")
     
     if action == "like" or action == "match":
-        print("[API DEBUG] Calling send_like()...")
+        logger.debug("Calling send_like()...")
         success = arduino.send_like()
-        print(f"[API DEBUG] send_like returned: {success}")
+        logger.debug(f"send_like returned: {success}")
         message = "Like signal sent to Arduino LCD (Heart display)"
     elif action == "skip" or action == "dislike":
-        print("[API DEBUG] Calling send_skip()...")
+        logger.debug("Calling send_skip()...")
         success = arduino.send_skip()
-        print(f"[API DEBUG] send_skip returned: {success}")
+        logger.debug(f"send_skip returned: {success}")
         message = "Skip signal sent to Arduino LCD (X display)"
     else:
         return jsonify({
@@ -155,7 +161,7 @@ def arduino_notify():
     
     status = arduino.get_status()
     
-    print(f"[ARDUINO] Action: {action}, Success: {success}, Connected: {status['connected']}")
+    logger.info(f"Arduino action: {action}, Success: {success}, Connected: {status['connected']}")
     
     return jsonify({
         "success": success,
