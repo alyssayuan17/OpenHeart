@@ -244,12 +244,61 @@ export default function BodySelector({ headImage, onHeadImageChange, outfit, onO
   const currentOutfit = outfit || localOutfit
   const setOutfit = onOutfitChange || setLocalOutfit
 
-  function handleFileChange(e) {
+  async function handleFileChange(e) {
     const file = e.target.files?.[0]
     if (!file) return
-    const reader = new FileReader()
-    reader.onload = (ev) => onHeadImageChange(ev.target.result)
-    reader.readAsDataURL(file)
+
+    const imageBitmap = await createImageBitmap(file)
+    const croppedDataUrl = await cropFace(imageBitmap)
+    onHeadImageChange(croppedDataUrl)
+  }
+
+  async function cropFace(imageBitmap) {
+    const { width, height } = imageBitmap
+
+    // Try browser FaceDetector API (Chrome)
+    if (typeof FaceDetector !== 'undefined') {
+      try {
+        const detector = new FaceDetector()
+        const faces = await detector.detect(imageBitmap)
+        if (faces.length > 0) {
+          const face = faces[0].boundingBox
+          // Add padding around the detected face
+          const pad = Math.max(face.width, face.height) * 0.35
+          const x = Math.max(0, face.x - pad)
+          const y = Math.max(0, face.y - pad)
+          const w = Math.min(width - x, face.width + pad * 2)
+          const h = Math.min(height - y, face.height + pad * 2)
+          // Make it square (use the larger dimension)
+          const size = Math.max(w, h)
+          const cx = x + w / 2
+          const cy = y + h / 2
+          const sx = Math.max(0, cx - size / 2)
+          const sy = Math.max(0, cy - size / 2)
+          const sSize = Math.min(size, width - sx, height - sy)
+
+          return cropToCanvas(imageBitmap, sx, sy, sSize, sSize)
+        }
+      } catch (err) {
+        console.warn('[FaceDetector error]', err)
+      }
+    }
+
+    // Fallback: center-crop to a square
+    const size = Math.min(width, height)
+    const sx = (width - size) / 2
+    const sy = (height - size) * 0.3 // bias toward top where faces usually are
+    return cropToCanvas(imageBitmap, sx, Math.max(0, sy), size, size)
+  }
+
+  function cropToCanvas(imageBitmap, sx, sy, sw, sh) {
+    const canvas = document.createElement('canvas')
+    const outputSize = 256
+    canvas.width = outputSize
+    canvas.height = outputSize
+    const ctx = canvas.getContext('2d')
+    ctx.drawImage(imageBitmap, sx, sy, sw, sh, 0, 0, outputSize, outputSize)
+    return canvas.toDataURL('image/jpeg', 0.9)
   }
 
   function selectItem(category, item) {
