@@ -1,6 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useAccessibility } from './context/AccessibilityContext'
-import { useApp } from './context/AppContext'
 import TopNav from './components/TopNav'
 import LoginPage from './pages/LoginPage'
 import OnboardingPage from './pages/OnboardingPage'
@@ -10,11 +9,9 @@ import ChatPage from './pages/ChatPage'
 
 export default function App() {
   const { themeClasses } = useAccessibility()
-  const { user } = useApp()
-
   return (
     <div className={`app-container ${themeClasses}`}>
-      {user && <TopNav />}
+      <TopNav />
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/onboarding" element={<OnboardingPage />} />

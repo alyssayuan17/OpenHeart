@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Heart } from 'lucide-react'
 import { useApp } from '../context/AppContext'
-import AccessibilityMenu from '../components/AccessibilityMenu'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -22,11 +21,6 @@ export default function LoginPage() {
 
   return (
     <div className="login-page">
-      {/* Accessibility is always available, even before login */}
-      <div style={{ position: 'fixed', top: 12, right: 20, zIndex: 200 }}>
-        <AccessibilityMenu />
-      </div>
-
       <div className="login-card">
         {/* REPLACE: swap this placeholder with your actual logo */}
         <div className="login-card__logo">

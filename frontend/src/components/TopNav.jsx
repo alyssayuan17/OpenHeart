@@ -18,23 +18,21 @@ export default function TopNav() {
   return (
     <nav className="top-nav">
       <div className="top-nav__left">
-        <button className="btn-ghost" onClick={handleLogout}>
-          <LogOut size={18} />
-          Logout
-        </button>
+        <span className="top-nav__title">OpenHeart</span>
+      </div>
+
+      <div className="top-nav__right">
         {showKeepSwiping && (
           <button className="btn-ghost" onClick={() => navigate('/swipe')}>
             <ArrowLeft size={18} />
             Keep Swiping
           </button>
         )}
-      </div>
-
-      {/* REPLACE: swap this text with your logo component / image */}
-      <div className="top-nav__center">OpenHeart</div>
-
-      <div className="top-nav__right">
         <AccessibilityMenu />
+        <button className="btn-ghost" onClick={handleLogout}>
+          <LogOut size={18} />
+          Logout
+        </button>
       </div>
     </nav>
   )

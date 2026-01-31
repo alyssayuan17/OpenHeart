@@ -277,14 +277,14 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
   top: 0;
   z-index: 100;
 }
-.top-nav__left { display: flex; gap: 8px; }
-.top-nav__center {
+.top-nav__left { display: flex; align-items: center; }
+.top-nav__title {
   font-family: var(--font-heading);
   font-size: var(--font-size-lg);
   font-weight: 700;
   color: var(--color-primary);
 }
-.top-nav__right { display: flex; align-items: center; gap: 6px; }
+.top-nav__right { display: flex; align-items: center; gap: 8px; }
 
 /* ============================================
    ACCESSIBILITY MENU
