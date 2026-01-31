@@ -8,11 +8,40 @@ const int colorLike[3] = {255, 0, 100};   // Bright Pink
 const int colorSkip[3] = {0, 0, 255};     // Bright Blue
 const int colorIdle[3] = {50, 50, 50};    // Dim White (save power)
 
+// --- Custom Character Bitmaps (5x8 pixels) ---
+// Heart icon (Character 0)
+byte heart[8] = {
+    0b00000,
+    0b01010,
+    0b11111,
+    0b11111,
+    0b11111,
+    0b01110,
+    0b00100,
+    0b00000
+};
+
+// X icon (Character 1)
+byte xIcon[8] = {
+    0b00000,
+    0b10001,
+    0b01010,
+    0b00100,
+    0b01010,
+    0b10001,
+    0b00000,
+    0b00000
+};
+
 void setup() {
     Wire.begin();
     Serial.begin(9600);
 
     lcd.begin(16, 2);
+    
+    // Create custom characters
+    lcd.createChar(0, heart);  // Register heart icon as character 0
+    lcd.createChar(1, xIcon);  // Register X icon as character 1
     
     // STARTUP SEQUENCE
     // Flash colors to show it's alive
