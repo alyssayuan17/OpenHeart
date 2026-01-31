@@ -34,6 +34,9 @@ export default function ChatPage() {
     setInput('')
     setIsTyping(true)
 
+    let reply
+    const startTime = Date.now()
+
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
@@ -47,7 +50,7 @@ export default function ChatPage() {
         }),
       })
       const data = await res.json()
-      setMessages((prev) => [...prev, { role: 'assistant', content: data.reply }])
+      reply = data.reply
     } catch {
       const fallbacks = [
         `That's really interesting! I'd love to hear more.`,
@@ -56,9 +59,17 @@ export default function ChatPage() {
         `I feel like we vibe really well! What's your ideal date?`,
         `That's awesome. Tell me something nobody knows about you!`,
       ]
-      const reply = fallbacks[messages.length % fallbacks.length]
-      setMessages((prev) => [...prev, { role: 'assistant', content: reply }])
+      reply = fallbacks[messages.length % fallbacks.length]
     }
+
+    // Simulate realistic typing delay (1–3s based on reply length)
+    const minDelay = 1000
+    const typingDelay = Math.min(3000, minDelay + (reply?.length || 0) * 20)
+    const elapsed = Date.now() - startTime
+    const remaining = typingDelay - elapsed
+    if (remaining > 0) await new Promise((r) => setTimeout(r, remaining))
+
+    setMessages((prev) => [...prev, { role: 'assistant', content: reply }])
     setIsTyping(false)
   }
 
