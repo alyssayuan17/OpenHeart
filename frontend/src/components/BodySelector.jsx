@@ -230,7 +230,10 @@ function OutfitLayer({ item, category }) {
 export default function BodySelector({ headImage, onHeadImageChange, outfit, onOutfitChange }) {
   const [selectedBody, setSelectedBody] = useState('casual')
   const [activeCategory, setActiveCategory] = useState('hats')
+  const [cameraOpen, setCameraOpen] = useState(false)
   const fileInputRef = useRef()
+  const videoRef = useRef()
+  const streamRef = useRef(null)
 
   // If parent doesn't manage outfit state, manage it locally
   const [localOutfit, setLocalOutfit] = useState({
@@ -301,6 +304,47 @@ export default function BodySelector({ headImage, onHeadImageChange, outfit, onO
     return canvas.toDataURL('image/jpeg', 0.9)
   }
 
+  async function openCamera() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } })
+      streamRef.current = stream
+      setCameraOpen(true)
+      // Wait for video element to mount, then attach stream
+      setTimeout(() => {
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream
+        }
+      }, 50)
+    } catch (err) {
+      alert('Could not access camera. Please check permissions.')
+      console.error('[Camera error]', err)
+    }
+  }
+
+  function closeCamera() {
+    streamRef.current?.getTracks().forEach((t) => t.stop())
+    streamRef.current = null
+    setCameraOpen(false)
+  }
+
+  async function capturePhoto() {
+    if (!videoRef.current) return
+    const video = videoRef.current
+    const canvas = document.createElement('canvas')
+    canvas.width = video.videoWidth
+    canvas.height = video.videoHeight
+    const ctx = canvas.getContext('2d')
+    // Mirror the image so it looks natural (selfie mode)
+    ctx.translate(canvas.width, 0)
+    ctx.scale(-1, 1)
+    ctx.drawImage(video, 0, 0)
+    closeCamera()
+
+    const imageBitmap = await createImageBitmap(canvas)
+    const croppedDataUrl = await cropFace(imageBitmap)
+    onHeadImageChange(croppedDataUrl)
+  }
+
   function selectItem(category, item) {
     setOutfit((prev) => ({
       ...prev,
@@ -347,28 +391,37 @@ export default function BodySelector({ headImage, onHeadImageChange, outfit, onO
         ))}
       </div>
 
+      {/* Camera modal */}
+      {cameraOpen && (
+        <div className="camera-modal">
+          <div className="camera-modal__content">
+            <video ref={videoRef} autoPlay playsInline muted className="camera-modal__video" />
+            <div className="camera-modal__actions">
+              <button className="btn btn-primary" onClick={capturePhoto}>
+                Snap
+              </button>
+              <button className="btn btn-secondary" onClick={closeCamera}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Photo upload */}
       <div className="body-selector__actions">
         <input
           ref={fileInputRef}
           type="file"
           accept="image/*"
-          capture="user"
           onChange={handleFileChange}
           hidden
         />
-        <button className="btn btn-secondary" onClick={() => fileInputRef.current?.click()}>
+        <button className="btn btn-secondary" onClick={openCamera}>
           <Camera size={18} />
           Take Photo
         </button>
-        <button
-          className="btn btn-secondary"
-          onClick={() => {
-            fileInputRef.current?.removeAttribute('capture')
-            fileInputRef.current?.click()
-            setTimeout(() => fileInputRef.current?.setAttribute('capture', 'user'), 100)
-          }}
-        >
+        <button className="btn btn-secondary" onClick={() => fileInputRef.current?.click()}>
           <Upload size={18} />
           Upload
         </button>
