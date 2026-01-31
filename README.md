@@ -85,9 +85,3 @@ Toggle from the gear icon (top-right corner, always visible):
 | POST | `/api/haptic` | Trigger haptic heart hardware (legacy, redirects to `/api/arduino`) |
 | GET | `/api/health` | Health check |
 
-## Team
-
-- **Alyssa** — Full-stack app development
-- **Renee** — Hardware, characters, frontend polish
-- **Michelle** — Character illustrations, logo, UI design
-- **Inshal** — Chatbot, AI model integration
