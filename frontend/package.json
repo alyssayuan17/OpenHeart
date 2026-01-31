@@ -9,11 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "lucide-react": "^0.469.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.1.0",
-    "react-tinder-card": "^1.6.4",
-    "lucide-react": "^0.469.0"
+    "react-tinder-card": "^1.6.4"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.0",

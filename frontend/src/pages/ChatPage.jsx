@@ -99,21 +99,36 @@ export default function ChatPage() {
   }
 
   async function speakMessage(text) {
-    // Try ElevenLabs backend first
-    try {
-      const res = await fetch('/api/tts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text }),
-      })
-      const data = await res.json()
-      if (data.audio_url) {
-        const audio = new Audio(data.audio_url)
-        audio.play()
-        return
+    // Try ElevenLabs REST API directly from browser
+    const apiKey = import.meta.env.VITE_ELEVENLABS_API_KEY
+    if (apiKey && apiKey !== 'your-key-here') {
+      try {
+        const voiceId = import.meta.env.VITE_ELEVENLABS_VOICE_ID || '21m00Tcm4TlvDq8ikWAM'
+        const res = await fetch(
+          `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
+          {
+            method: 'POST',
+            headers: {
+              'xi-api-key': apiKey,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              text,
+              model_id: 'eleven_multilingual_v2',
+            }),
+          }
+        )
+        if (res.ok) {
+          const blob = await res.blob()
+          const url = URL.createObjectURL(blob)
+          const audio = new Audio(url)
+          audio.onended = () => URL.revokeObjectURL(url)
+          audio.play()
+          return
+        }
+      } catch (err) {
+        console.error('[ElevenLabs error]', err)
       }
-    } catch {
-      // Fall through to browser TTS
     }
 
     // Browser fallback TTS

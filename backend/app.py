@@ -3,7 +3,6 @@ OpenHeart — Python Backend
 
 Endpoints:
   POST /api/chat    — Send messages, get chatbot reply
-  POST /api/tts     — Text-to-speech (ElevenLabs placeholder)
   POST /api/haptic  — Trigger hardware haptic heart (placeholder)
   GET  /api/health  — Health check
 """
@@ -50,60 +49,30 @@ def chat():
         "Ask questions back to keep the conversation going."
     )
 
-    # Try OpenAI first
-    api_key = os.getenv("OPENAI_API_KEY")
-    if api_key and api_key != "sk-your-key-here":
+    # Try Gemini first
+    api_key = os.getenv("GEMINI_API_KEY")
+    if api_key and api_key != "your-gemini-key-here":
         try:
-            import openai
-            client = openai.OpenAI(api_key=api_key)
-            response = client.chat.completions.create(
-                model="gpt-3.5-turbo",
-                messages=[
-                    {"role": "system", "content": system_prompt},
-                    *[{"role": m["role"], "content": m["content"]} for m in messages],
-                ],
-                max_tokens=150,
+            from google import genai
+
+            client = genai.Client(api_key=api_key)
+
+            # Build conversation history for Gemini
+            contents = [{"role": "user", "parts": [{"text": system_prompt}]}]
+            for m in messages:
+                role = "user" if m["role"] == "user" else "model"
+                contents.append({"role": role, "parts": [{"text": m["content"]}]})
+
+            response = client.models.generate_content(
+                model="gemini-2.0-flash",
+                contents=contents,
             )
-            return jsonify({"reply": response.choices[0].message.content})
+            return jsonify({"reply": response.text})
         except Exception as e:
-            print(f"[OpenAI error] {e}")
+            print(f"[Gemini error] {e}")
 
     # Fallback — no API key or error
     return jsonify({"reply": random.choice(FALLBACK_REPLIES)})
-
-
-# ---------- Text-to-Speech (ElevenLabs placeholder) ----------
-
-@app.route("/api/tts", methods=["POST"])
-def text_to_speech():
-    data = request.get_json()
-    text = data.get("text", "")
-
-    api_key = os.getenv("ELEVENLABS_API_KEY")
-    voice_id = os.getenv("ELEVENLABS_VOICE_ID", "21m00Tcm4TlvDq8ikWAM")
-
-    if api_key and api_key != "your-key-here":
-        try:
-            import requests as req
-            response = req.post(
-                f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}",
-                headers={
-                    "xi-api-key": api_key,
-                    "Content-Type": "application/json",
-                },
-                json={"text": text, "model_id": "eleven_monolingual_v1"},
-            )
-            if response.ok:
-                audio_path = os.path.join("static", "tts_output.mp3")
-                os.makedirs("static", exist_ok=True)
-                with open(audio_path, "wb") as f:
-                    f.write(response.content)
-                return jsonify({"audio_url": f"/static/tts_output.mp3"})
-        except Exception as e:
-            print(f"[ElevenLabs error] {e}")
-
-    # Fallback — tell frontend to use browser TTS
-    return jsonify({"audio_url": None, "fallback": "browser", "text": text})
 
 
 # ---------- Hardware Haptic Heart (placeholder) ----------
