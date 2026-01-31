@@ -252,6 +252,30 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
 }
 
 /* ============================================
+   TOP NAV
+   ============================================ */
+
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.top-nav__left { display: flex; gap: 8px; }
+.top-nav__center {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-primary);
+}
+.top-nav__right { display: flex; align-items: center; gap: 6px; }
+
+/* ============================================
    ACCESSIBILITY MENU
    ============================================ */
 
