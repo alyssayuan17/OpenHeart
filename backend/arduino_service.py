@@ -136,8 +136,10 @@ class ArduinoLCDService:
             self.is_connected = False
             try:
                 self.serial_port.close()
-            except:
-                pass
+            except serial.SerialException as close_error:
+                self.log(f"[Arduino] Error closing serial port: {close_error}")
+            except Exception as close_error:
+                self.log(f"[Arduino] Unexpected error closing serial port: {close_error}")
             return False
     
     def send_like(self) -> bool:
