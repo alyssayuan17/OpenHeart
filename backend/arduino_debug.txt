@@ -124,3 +124,5 @@
 [2026-02-01 01:35:51] [Arduino] Sent: D
 [2026-02-01 01:37:22] [Arduino DEBUG] Sending command: D
 [2026-02-01 01:37:22] [Arduino] Sent: D
+[2026-02-01 01:50:33] [Arduino] Connecting to /dev/cu.debug-console...
+[2026-02-01 01:50:36] [Arduino] SUCCESSFULLY CONNECTED to /dev/cu.debug-console
