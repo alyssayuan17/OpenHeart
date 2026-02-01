@@ -97,7 +97,7 @@ export default function OnboardingPage() {
 
   return (
     <div className="onboarding-page">
-      <h1>Build Your Profile</h1>
+      <img src="/Build Your Own Profile.png" alt="Build Your Profile" className="onboarding-page__title-image" />
 
       <form onSubmit={handleSubmit}>
         <div className="onboarding-layout">
