@@ -1,6 +1,10 @@
 # OpenHeart
 
-A dating app that's inclusive of people with disabilities. Built for ElleHacks.
+A dating app that's inclusive of people with disabilities. Built for **ElleHacks**.
+
+OpenHeart focuses on accessible communication — text, voice, and assistive hardware — so everyone can express themselves comfortably.
+
+---
 
 ## Quick Start
 
@@ -12,7 +16,9 @@ npm install --legacy-peer-deps
 npm run dev
 ```
 
-Opens at **http://localhost:3000**
+Opens at **[http://localhost:3000](http://localhost:3000)**
+
+---
 
 ### Backend (Python + Flask)
 
@@ -23,7 +29,63 @@ cp .env.example .env      # then fill in your API keys
 python app.py
 ```
 
-Runs at **http://localhost:5000**
+Runs at **[http://localhost:5001](http://localhost:5001)**
+
+---
+
+## Environment Variables
+
+The backend relies on external APIs for conversational AI and text-to-speech.
+
+Required variables in `backend/.env`:
+
+```env
+# ElevenLabs (Text-to-Speech)
+ELEVEN_LABS_API_KEY=your_elevenlabs_api_key
+ELEVEN_VOICE_ID=your_voice_id
+
+# (Optional / future expansion)
+# OPENAI_API_KEY=your_key_here
+```
+
+> **Note:** `.env` is gitignored and should never be committed.
+
+---
+
+## ElevenLabs Integration (Text-to-Speech)
+
+OpenHeart uses **ElevenLabs** to convert chatbot responses and messages into natural-sounding speech.
+
+### How it works
+
+* Frontend sends text → `/api/tts`
+* Flask backend calls the ElevenLabs API
+* An MP3 file is generated and returned as a playable URL
+
+### Example Request
+
+```bash
+curl -X POST http://localhost:5001/api/tts \
+  -H "Content-Type: application/json" \
+  -d '{"text":"Hello from OpenHeart"}'
+```
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "url": "/static/tts_output.mp3"
+}
+```
+
+You can play the audio directly at:
+
+```
+http://localhost:5001/static/tts_output.mp3
+```
+
+---
 
 ## Project Structure
 
@@ -37,51 +99,55 @@ frontend/
     index.css         All styles + theme variables (edit to restyle)
 
 backend/
-  app.py              Flask API (chat, TTS, haptic endpoints)
+  app.py              Flask API (chat, TTS, Arduino, health)
   .env.example        API key template
+  static/             Generated audio files (TTS output)
 ```
 
-## How to Customize the Design
-
-Everything is designed to be easy to swap:
-
-| What to change | Where |
-|---|---|
-| Colors & fonts | `frontend/src/index.css` — CSS variables in `:root` |
-| Logo | Search `REPLACE` comments in `TopNav.jsx` and `LoginPage.jsx` |
-| Body illustrations | `BodySelector.jsx` — replace the SVG functions |
-| Profile card design | `SwipeCard.jsx` + `.swipe-card` styles in CSS |
-| Dummy profiles | `frontend/src/data/dummyProfiles.js` |
-| Chatbot personality | `backend/app.py` — edit the system prompt |
+---
 
 ## Features
 
-- **Login** — dummy auth (email/password)
-- **Onboarding** — inclusive profile builder (gender identity, pronouns, sexual orientation, communication preferences)
-- **Body Selector** — pick a cartoon body, upload/take photo for the head
-- **Swiping** — Tinder-style card swiping, instant match on right swipe
-- **Chat** — messaging with chatbot, voice messages (auto-transcribed), text-to-speech
-- **Accessibility** — high-contrast, colorblind-safe, dyslexia-friendly, reduced-motion, large-text themes
-- **Hardware** — Arduino LCD display shows hearts ❤️ on like, X ❌ on skip (see [ARDUINO_SETUP.md](./arduino/README.md))
+* **Login** — dummy auth (email/password)
+* **Onboarding** — inclusive profile builder (gender identity, pronouns, sexual orientation, communication preferences)
+* **Body Selector** — pick a cartoon body, upload/take photo for the head
+* **Swiping** — Tinder-style card swiping, instant match on right swipe
+* **Chat** — messaging with chatbot, voice messages (auto-transcribed), text-to-speech (ElevenLabs)
+* **Accessibility** — high-contrast, colorblind-safe, dyslexia-friendly, reduced-motion, large-text themes
+* **Hardware Integration** — Arduino LCD displays ❤️ on like, ❌ on skip
+
+---
 
 ## Accessibility Modes
 
 Toggle from the gear icon (top-right corner, always visible):
 
-- **High Contrast** — black background, yellow accents, white text
-- **Colorblind Safe** — deuteranopia-friendly palette
-- **Dyslexia Friendly** — OpenDyslexic font, warm background, wider spacing
-- **Reduced Motion** — disables all animations and transitions
-- **Large Text** — scales all font sizes up
+* **High Contrast** — black background, yellow accents, white text
+* **Colorblind Safe** — deuteranopia-friendly palette
+* **Dyslexia Friendly** — OpenDyslexic font, warm background, wider spacing
+* **Reduced Motion** — disables all animations and transitions
+* **Large Text** — scales all font sizes up
+
+---
 
 ## API Endpoints
 
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/api/chat` | Send messages, get chatbot reply |
-| POST | `/api/tts` | Text-to-speech (ElevenLabs) |
-| POST | `/api/arduino` | Send like/skip signal to Arduino LCD |
-| GET | `/api/arduino/status` | Check Arduino connection status |
-| POST | `/api/haptic` | Trigger haptic heart hardware (legacy, redirects to `/api/arduino`) |
-| GET | `/api/health` | Health check |
+| Method | Endpoint              | Description                            |
+| ------ | --------------------- | -------------------------------------- |
+| POST   | `/api/chat`           | Send messages, get chatbot reply       |
+| POST   | `/api/tts`            | Text-to-speech using ElevenLabs        |
+| POST   | `/api/arduino`        | Send like/skip signal to Arduino LCD   |
+| GET    | `/api/arduino/status` | Check Arduino connection status        |
+| POST   | `/api/haptic`         | Trigger haptic heart hardware (legacy) |
+| GET    | `/api/health`         | Health check                           |
 
+---
+
+## Built For
+
+* **ElleHacks**
+* Accessibility-first design
+* Inclusive communication
+* Rapid prototyping with real hardware + AI
+
+❤️ OpenHeart — connection without barriers.
