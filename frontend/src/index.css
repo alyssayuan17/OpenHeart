@@ -725,12 +725,12 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
 }
 .card-stack {
   position: relative;
-  width: 340px;
+  width: 500px;
   height: 480px;
 }
 .swipe-card {
   position: absolute;
-  width: 340px;
+  width: 500px;
   height: 480px;
   border-radius: var(--radius-lg);
   background: var(--color-surface);
