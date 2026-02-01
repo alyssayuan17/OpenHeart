@@ -70,3 +70,57 @@
 [2026-01-31 18:28:18] [Arduino] Sent: D
 [2026-01-31 18:28:19] [Arduino DEBUG] Sending command: L
 [2026-01-31 18:28:19] [Arduino] Sent: L
+[2026-02-01 00:36:20] [Arduino] Connecting to /dev/cu.debug-console...
+[2026-02-01 00:36:23] [Arduino] SUCCESSFULLY CONNECTED to /dev/cu.debug-console
+[2026-02-01 00:37:04] [Arduino] Connecting to /dev/cu.debug-console...
+[2026-02-01 00:37:07] [Arduino] SUCCESSFULLY CONNECTED to /dev/cu.debug-console
+[2026-02-01 00:38:04] [Arduino DEBUG] Sending command: D
+[2026-02-01 00:38:04] [Arduino] Sent: D
+[2026-02-01 00:38:05] [Arduino DEBUG] Sending command: D
+[2026-02-01 00:38:05] [Arduino] Sent: D
+[2026-02-01 00:38:06] [Arduino DEBUG] Sending command: D
+[2026-02-01 00:38:06] [Arduino] Sent: D
+[2026-02-01 00:38:06] [Arduino DEBUG] Sending command: D
+[2026-02-01 00:38:06] [Arduino] Sent: D
+[2026-02-01 00:38:09] [Arduino DEBUG] Sending command: L
+[2026-02-01 00:38:09] [Arduino] Sent: L
+[2026-02-01 00:38:31] [Arduino DEBUG] Sending command: D
+[2026-02-01 00:38:31] [Arduino] Sent: D
+[2026-02-01 00:38:32] [Arduino DEBUG] Sending command: D
+[2026-02-01 00:38:32] [Arduino] Sent: D
+[2026-02-01 00:38:33] [Arduino DEBUG] Sending command: D
+[2026-02-01 00:38:33] [Arduino] Sent: D
+[2026-02-01 00:38:33] [Arduino DEBUG] Sending command: D
+[2026-02-01 00:38:33] [Arduino] Sent: D
+[2026-02-01 00:38:34] [Arduino DEBUG] Sending command: D
+[2026-02-01 00:38:34] [Arduino] Sent: D
+[2026-02-01 00:38:35] [Arduino DEBUG] Sending command: D
+[2026-02-01 00:38:35] [Arduino] Sent: D
+[2026-02-01 01:08:14] [Arduino DEBUG] Sending command: D
+[2026-02-01 01:08:14] [Arduino] Sent: D
+[2026-02-01 01:08:15] [Arduino DEBUG] Sending command: D
+[2026-02-01 01:08:15] [Arduino] Sent: D
+[2026-02-01 01:08:16] [Arduino DEBUG] Sending command: D
+[2026-02-01 01:08:16] [Arduino] Sent: D
+[2026-02-01 01:08:17] [Arduino DEBUG] Sending command: D
+[2026-02-01 01:08:17] [Arduino] Sent: D
+[2026-02-01 01:08:18] [Arduino DEBUG] Sending command: D
+[2026-02-01 01:08:18] [Arduino] Sent: D
+[2026-02-01 01:08:18] [Arduino DEBUG] Sending command: D
+[2026-02-01 01:08:18] [Arduino] Sent: D
+[2026-02-01 01:32:29] [Arduino DEBUG] Sending command: D
+[2026-02-01 01:32:29] [Arduino] Sent: D
+[2026-02-01 01:32:31] [Arduino DEBUG] Sending command: L
+[2026-02-01 01:32:31] [Arduino] Sent: L
+[2026-02-01 01:33:20] [Arduino DEBUG] Sending command: D
+[2026-02-01 01:33:20] [Arduino] Sent: D
+[2026-02-01 01:34:23] [Arduino DEBUG] Sending command: D
+[2026-02-01 01:34:23] [Arduino] Sent: D
+[2026-02-01 01:34:25] [Arduino DEBUG] Sending command: L
+[2026-02-01 01:34:25] [Arduino] Sent: L
+[2026-02-01 01:35:12] [Arduino DEBUG] Sending command: L
+[2026-02-01 01:35:12] [Arduino] Sent: L
+[2026-02-01 01:35:51] [Arduino DEBUG] Sending command: D
+[2026-02-01 01:35:51] [Arduino] Sent: D
+[2026-02-01 01:37:22] [Arduino DEBUG] Sending command: D
+[2026-02-01 01:37:22] [Arduino] Sent: D
