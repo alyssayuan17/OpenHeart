@@ -126,3 +126,21 @@
 [2026-02-01 01:37:22] [Arduino] Sent: D
 [2026-02-01 01:50:33] [Arduino] Connecting to /dev/cu.debug-console...
 [2026-02-01 01:50:36] [Arduino] SUCCESSFULLY CONNECTED to /dev/cu.debug-console
+[2026-02-01 07:16:41] [Arduino] Connecting to /dev/cu.debug-console...
+[2026-02-01 07:16:44] [Arduino] SUCCESSFULLY CONNECTED to /dev/cu.debug-console
+[2026-02-01 07:21:00] [Arduino DEBUG] Sending command: D
+[2026-02-01 07:21:00] [Arduino] Sent: D
+[2026-02-01 07:21:03] [Arduino DEBUG] Sending command: D
+[2026-02-01 07:21:03] [Arduino] Sent: D
+[2026-02-01 07:21:05] [Arduino DEBUG] Sending command: D
+[2026-02-01 07:21:05] [Arduino] Sent: D
+[2026-02-01 07:21:07] [Arduino DEBUG] Sending command: D
+[2026-02-01 07:21:07] [Arduino] Sent: D
+[2026-02-01 07:21:10] [Arduino DEBUG] Sending command: D
+[2026-02-01 07:21:10] [Arduino] Sent: D
+[2026-02-01 07:21:12] [Arduino DEBUG] Sending command: D
+[2026-02-01 07:21:12] [Arduino] Sent: D
+[2026-02-01 07:21:19] [Arduino DEBUG] Sending command: D
+[2026-02-01 07:21:19] [Arduino] Sent: D
+[2026-02-01 07:21:22] [Arduino DEBUG] Sending command: L
+[2026-02-01 07:21:22] [Arduino] Sent: L
