@@ -92,7 +92,8 @@ http://localhost:5001/static/tts_output.mp3
 ```
 frontend/
   src/
-    components/       UI components (TopNav, BodySelector, SwipeCard, AccessibilityMenu)
+    components/       UI components (TopNav, BodySelector, SwipeCard, AccessibilityMenu, HeadTiltOverlay)
+    hooks/            Custom hooks (useHeadTilt — MediaPipe face tracking)
     context/          React contexts (AppContext, AccessibilityContext)
     pages/            App screens (Login, Onboarding, JourneyAnimation, Swiping, Chat)
     data/             Dummy profiles for swiping
@@ -111,9 +112,10 @@ backend/
 * **Login** — dummy auth (email/password)
 * **Onboarding** — inclusive profile builder (gender identity, pronouns, sexual orientation, communication preferences)
 * **Body Selector** — pick a cartoon body, upload/take photo for the head
-* **Swiping** — Tinder-style card swiping, instant match on right swipe
+* **Swiping** — Tinder-style card swiping, instant match on right swipe, hands-free head tilt control
 * **Chat** — messaging with chatbot, voice messages (auto-transcribed), text-to-speech (ElevenLabs)
 * **Accessibility** — high-contrast, colorblind-safe, dyslexia-friendly, reduced-motion, large-text themes
+* **Computer Vision** — head tilt detection for hands-free swiping (MediaPipe), automatic face-based photo cropping (browser FaceDetector API)
 * **Hardware Integration** — Arduino LCD displays ❤️ on like, ❌ on skip
 
 ---
@@ -127,6 +129,25 @@ Toggle from the gear icon (top-right corner, always visible):
 * **Dyslexia Friendly** — OpenDyslexic font, warm background, wider spacing
 * **Reduced Motion** — disables all animations and transitions
 * **Large Text** — scales all font sizes up
+* **Head Tilt Control** — hands-free swiping using your webcam (toggle on the swiping page)
+
+---
+
+## Computer Vision
+
+OpenHeart uses lightweight, browser-based computer vision — no OpenCV or heavy ML frameworks needed. Everything runs client-side with no extra server setup.
+
+### Head Tilt Swiping (MediaPipe)
+
+Tilt your head left to pass, right to match — completely hands-free. Uses Google's **MediaPipe Face Landmarker** to track face landmarks through the webcam in real-time. The app grabs two eye points, calculates the tilt angle between them, applies smoothing to reduce jitter, and triggers a swipe when the angle is large enough. A short cooldown prevents accidental double-swipes.
+
+* Toggle it with the **Head Tilt** button on the swiping page (between the thumbs up/down buttons)
+* Webcam preview appears below the cards with live angle readout
+* Directional arrows show "Pass" or "Match" feedback on tilt
+
+### Face-Based Photo Cropping (Browser FaceDetector API)
+
+During onboarding, when you upload or take a profile photo, the app uses the **browser's built-in FaceDetector API** to find your face and automatically crop around it. If the browser doesn't support it (non-Chromium), it falls back to a simple center crop.
 
 ---
 
