@@ -6,11 +6,13 @@ import OnboardingPage from './pages/OnboardingPage'
 import JourneyAnimation from './pages/JourneyAnimation'
 import SwipingPage from './pages/SwipingPage'
 import ChatPage from './pages/ChatPage'
+import HeartCursorTrail from './components/HeartCursorTrail'
 
 export default function App() {
   const { themeClasses } = useAccessibility()
   return (
     <div className={`app-container ${themeClasses}`}>
+      <HeartCursorTrail />
       <TopNav />
       <Routes>
         <Route path="/" element={<LoginPage />} />

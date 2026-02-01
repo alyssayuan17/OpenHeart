@@ -1149,6 +1149,25 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
   50% { opacity: 0.3; }
 }
 
+.heart-trail {
+  position: fixed;
+  pointer-events: none;
+  font-size: 20px;
+  z-index: 9999;
+  animation: heartFloat 1s ease-out forwards;
+}
+
+@keyframes heartFloat {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% - 40px)) scale(0.5);
+  }
+}
+
 /* ============================================
    HEAD TILT CONTROL
    ============================================ */
