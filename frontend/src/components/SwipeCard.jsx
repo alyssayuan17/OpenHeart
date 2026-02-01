@@ -1,3 +1,14 @@
+import { Palette, Music, Basketball, Leaf, Gamepad2, Drama, User } from 'lucide-react'
+
+const EMOJI_TO_ICON = {
+  '🎨': Palette,
+  '🎵': Music,
+  '🏀': Basketball,
+  '🌿': Leaf,
+  '🎮': Gamepad2,
+  '🎭': Drama,
+}
+
 // Unique gradient per card so you can tell them apart
 const GRADIENTS = [
   'linear-gradient(135deg, #FDE8E4 0%, #4ECDC4 100%)',
@@ -14,10 +25,20 @@ export default function SwipeCard({ profile }) {
   return (
     <div className="swipe-card">
       {/* REPLACE: swap this gradient placeholder with a real profile photo */}
-      <div className="swipe-card__photo" style={{ background: gradient }}>
-        <div className="swipe-card__photo-placeholder">
-          {profile.emoji || '?'}
-        </div>
+      <div className="swipe-card__photo" style={{ background: profile.photo ? 'transparent' : gradient }}>
+        {profile.photo ? (
+          <>
+            <div className="swipe-card__photo-bg"></div>
+            <img src={profile.photo} alt={profile.name} className="swipe-card__photo-img" />
+          </>
+        ) : (
+          <div className="swipe-card__photo-placeholder">
+            {(() => {
+              const IconComponent = EMOJI_TO_ICON[profile.emoji] || User
+              return <IconComponent size={48} />
+            })()}
+          </div>
+        )}
       </div>
 
       <div className="swipe-card__info">

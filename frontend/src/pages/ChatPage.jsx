@@ -1,8 +1,17 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Send, Mic, MicOff, Volume2 } from 'lucide-react'
+import { Send, Mic, MicOff, Volume2, Palette, Music, Basketball, Leaf, Gamepad2, Drama, User } from 'lucide-react'
 import { useApp } from '../context/AppContext'
 import { dummyProfiles } from '../data/dummyProfiles'
+
+const EMOJI_TO_ICON = {
+  '🎨': Palette,
+  '🎵': Music,
+  '🏀': Basketball,
+  '🌿': Leaf,
+  '🎮': Gamepad2,
+  '🎭': Drama,
+}
 
 export default function ChatPage() {
   const { matchId } = useParams()
@@ -170,7 +179,14 @@ export default function ChatPage() {
       {/* Header */}
       <div className="chat-header">
         <div className="chat-header__info">
-          <div className="chat-header__avatar">{match.emoji || match.name?.[0]}</div>
+          <div className="chat-header__avatar">
+            {match.photo ? (
+              <img src={match.photo} alt={match.name} className="chat-header__avatar-img" />
+            ) : (() => {
+              const IconComponent = EMOJI_TO_ICON[match.emoji] || User
+              return <IconComponent size={24} />
+            })()}
+          </div>
           <div>
             <div className="chat-header__name">{match.name}</div>
             <div style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>
