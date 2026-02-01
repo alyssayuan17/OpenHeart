@@ -144,3 +144,29 @@
 [2026-02-01 07:21:19] [Arduino] Sent: D
 [2026-02-01 07:21:22] [Arduino DEBUG] Sending command: L
 [2026-02-01 07:21:22] [Arduino] Sent: L
+[2026-02-01 07:24:02] [Arduino DEBUG] Sending command: D
+[2026-02-01 07:24:02] [Arduino] Sent: D
+[2026-02-01 07:24:14] [Arduino DEBUG] Sending command: D
+[2026-02-01 07:24:14] [Arduino] Sent: D
+[2026-02-01 07:24:27] [Arduino DEBUG] Sending command: D
+[2026-02-01 07:24:27] [Arduino] Sent: D
+[2026-02-01 07:26:04] [Arduino DEBUG] Sending command: L
+[2026-02-01 07:26:04] [Arduino] Sent: L
+[2026-02-01 07:32:33] [Arduino DEBUG] Sending command: D
+[2026-02-01 07:32:33] [Arduino] Sent: D
+[2026-02-01 07:32:41] [Arduino DEBUG] Sending command: D
+[2026-02-01 07:32:41] [Arduino] Sent: D
+[2026-02-01 07:32:43] [Arduino DEBUG] Sending command: D
+[2026-02-01 07:32:43] [Arduino] Sent: D
+[2026-02-01 07:32:45] [Arduino DEBUG] Sending command: D
+[2026-02-01 07:32:45] [Arduino] Sent: D
+[2026-02-01 07:32:47] [Arduino DEBUG] Sending command: D
+[2026-02-01 07:32:47] [Arduino] Sent: D
+[2026-02-01 08:22:35] [Arduino DEBUG] Sending command: D
+[2026-02-01 08:22:35] [Arduino] Sent: D
+[2026-02-01 08:22:49] [Arduino DEBUG] Sending command: D
+[2026-02-01 08:22:49] [Arduino] Sent: D
+[2026-02-01 08:22:52] [Arduino DEBUG] Sending command: D
+[2026-02-01 08:22:52] [Arduino] Sent: D
+[2026-02-01 08:35:29] [Arduino] Connecting to /dev/cu.debug-console...
+[2026-02-01 08:35:32] [Arduino] SUCCESSFULLY CONNECTED to /dev/cu.debug-console

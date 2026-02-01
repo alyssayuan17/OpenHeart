@@ -360,11 +360,11 @@ export default function BodySelector({ headImage, onHeadImageChange, outfit, onO
           onChange={handleFileChange}
           hidden
         />
-        <button className="btn btn-secondary" onClick={openCamera}>
+        <button type="button" className="btn btn-secondary" onClick={openCamera}>
           <Camera size={18} />
           Take Photo
         </button>
-        <button className="btn btn-secondary" onClick={() => fileInputRef.current?.click()}>
+        <button type="button" className="btn btn-secondary" onClick={() => fileInputRef.current?.click()}>
           <Upload size={18} />
           Upload
         </button>
