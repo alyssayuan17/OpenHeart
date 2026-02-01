@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { Settings, Eye, Palette, BookOpen, Zap, Type } from 'lucide-react'
+import { Settings, Eye, Palette, BookOpen, Zap, Type, Scan } from 'lucide-react'
 import { useAccessibility } from '../context/AccessibilityContext'
 
 const OPTIONS = [
@@ -8,6 +8,7 @@ const OPTIONS = [
   { key: 'dyslexia', label: 'Dyslexia Friendly', icon: BookOpen },
   { key: 'reducedMotion', label: 'Reduced Motion', icon: Zap },
   { key: 'largeText', label: 'Large Text', icon: Type },
+  { key: 'headTiltControl', label: 'Head Tilt Control', icon: Scan },
 ]
 
 export default function AccessibilityMenu() {
