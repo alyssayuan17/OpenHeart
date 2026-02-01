@@ -11,12 +11,17 @@ import os
 import random
 import atexit
 import logging
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+
 from dotenv import load_dotenv
-from arduino_service import get_arduino_service, cleanup_arduino_service
 
 load_dotenv()
+
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+from arduino_service import get_arduino_service, cleanup_arduino_service
+from elevenlabs_service import synthesize_text
+
+
 
 # Configure logging
 logging.basicConfig(
@@ -164,6 +169,38 @@ def haptic_notify():
     # Forward to arduino endpoint
     return arduino_notify()
 
+# ---------- Eleven Labs ----------
+
+@app.route("/api/tts", methods=["POST"])
+def tts():
+    """
+    Generate TTS with Eleven Labs.
+    POST JSON: { "text": "Hello world", "voice": "<optional voice id>" }
+    Returns: { success: bool, url: "/static/tts_output.mp3" }
+    """
+    data = request.get_json(silent=True) or {}
+    text = (data.get("text") or "").strip()
+    voice = data.get("voice")
+    if not text:
+        return jsonify({"success": False, "error": "No text provided"}), 400
+
+    success, result = synthesize_text(text, voice_id=voice)
+    if not success:
+        # return the error message from synthesize_text
+        return jsonify({"success": False, "error": result}), 500
+
+    # result is the filesystem path; return the static URL
+    url = f"/static/{os.path.basename(result)}"
+    return jsonify({"success": True, "url": url})
+
+
+@app.route("/api/tts", methods=["GET"])
+def tts_status():
+    """Quick status: returns URL if tts_output.mp3 exists."""
+    path = os.path.join("static", "tts_output.mp3")
+    if os.path.exists(path):
+        return jsonify({"success": True, "url": "/static/tts_output.mp3"})
+    return jsonify({"success": False, "error": "No TTS file generated yet"}), 404
 
 # ---------- Health check ----------
 
@@ -176,3 +213,6 @@ if __name__ == "__main__":
     # Debug mode disabled for Arduino compatibility
     # (Flask's auto-reloader conflicts with Arduino serial connection)
     app.run(debug=False, port=5001)
+
+
+
