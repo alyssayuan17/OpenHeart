@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import BodySelector from '../components/BodySelector'
-import AccessibilityMenu from '../components/AccessibilityMenu'
 
 const GENDER_OPTIONS = [
   'Man', 'Woman', 'Non-binary', 'Genderfluid', 'Genderqueer',
@@ -98,10 +97,6 @@ export default function OnboardingPage() {
 
   return (
     <div className="onboarding-page">
-      <div style={{ position: 'fixed', top: 12, right: 20, zIndex: 200 }}>
-        <AccessibilityMenu />
-      </div>
-
       <h1>Build Your Profile</h1>
 
       <form onSubmit={handleSubmit}>

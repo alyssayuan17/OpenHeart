@@ -62,3 +62,11 @@
 [2026-01-31 18:19:20] [Arduino] Sent: L
 [2026-01-31 18:20:16] [Arduino DEBUG] Sending command: L
 [2026-01-31 18:20:16] [Arduino] Sent: L
+[2026-01-31 18:28:07] [Arduino DEBUG] Sending command: L
+[2026-01-31 18:28:07] [Arduino] Sent: L
+[2026-01-31 18:28:17] [Arduino DEBUG] Sending command: D
+[2026-01-31 18:28:17] [Arduino] Sent: D
+[2026-01-31 18:28:18] [Arduino DEBUG] Sending command: D
+[2026-01-31 18:28:18] [Arduino] Sent: D
+[2026-01-31 18:28:19] [Arduino DEBUG] Sending command: L
+[2026-01-31 18:28:19] [Arduino] Sent: L
