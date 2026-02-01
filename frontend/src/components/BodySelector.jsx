@@ -132,8 +132,8 @@ const OUTFIT_ITEMS = {
   ],
   hands: [
     { id: 'black_skin', label: 'Dark', image: '/outfits/hands/black_skin.png', color: '#3B2219', square: true },
-    { id: 'brown_skin', label: 'Brown', image: '/outfits/hands/brown_skin.png', color: '#8D5524', square: true },
-    { id: 'white_skin', label: 'Light', image: '/outfits/hands/white_skin.png', color: '#FFDBAC', square: true },
+    { id: 'brown_skin', label: 'Brown', image: '/outfits/hands/brown_skin.PNG', color: '#8D5524', square: true },
+    { id: 'white_skin', label: 'Light', image: '/outfits/hands/white_skin.PNG', color: '#FFDBAC', square: true },
   ],
 }
 
