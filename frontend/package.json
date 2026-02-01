@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mediapipe/tasks-vision": "^0.10.32",
     "@react-spring/web": "^10.0.3",
     "lucide-react": "^0.469.0",
     "react": "^19.0.0",

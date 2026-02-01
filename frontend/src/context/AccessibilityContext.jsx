@@ -8,6 +8,7 @@ const THEMES = {
   dyslexia: 'theme-dyslexia',
   reducedMotion: 'theme-reduced-motion',
   largeText: 'theme-large-text',
+  headTiltControl: 'theme-head-tilt',
 }
 
 export function AccessibilityProvider({ children }) {
@@ -17,6 +18,7 @@ export function AccessibilityProvider({ children }) {
     dyslexia: false,
     reducedMotion: false,
     largeText: false,
+    headTiltControl: false,
   })
 
   const toggle = useCallback((key) => {

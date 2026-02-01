@@ -1,14 +1,17 @@
 import { useState, useRef, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import TinderCard from 'react-tinder-card'
-import { ThumbsDown, ThumbsUp } from 'lucide-react'
+import { ThumbsDown, ThumbsUp, ScanFace } from 'lucide-react'
 import { useApp } from '../context/AppContext'
+import { useAccessibility } from '../context/AccessibilityContext'
 import { dummyProfiles } from '../data/dummyProfiles'
 import SwipeCard from '../components/SwipeCard'
+import HeadTiltOverlay from '../components/HeadTiltOverlay'
 
 export default function SwipingPage() {
   const navigate = useNavigate()
   const { setCurrentMatch } = useApp()
+  const { activeThemes, toggle } = useAccessibility()
   const [gone, setGone] = useState([])
   const [matchPopup, setMatchPopup] = useState(null)
 
@@ -101,6 +104,13 @@ export default function SwipingPage() {
               <ThumbsDown size={22} />
             </button>
             <button
+              className={`btn head-tilt-toggle ${activeThemes.headTiltControl ? 'head-tilt-toggle--active' : ''}`}
+              onClick={() => toggle('headTiltControl')}
+            >
+              <ScanFace size={20} />
+              {activeThemes.headTiltControl ? 'Head Tilt ON' : 'Head Tilt'}
+            </button>
+            <button
               className="btn-icon"
               onClick={() => swipeManual('right')}
               aria-label="Like"
@@ -109,6 +119,11 @@ export default function SwipingPage() {
               <ThumbsUp size={22} />
             </button>
           </div>
+
+          <HeadTiltOverlay
+            onSwipeLeft={() => swipeManual('left')}
+            onSwipeRight={() => swipeManual('right')}
+          />
         </>
       )}
 
