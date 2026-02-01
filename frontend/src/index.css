@@ -671,6 +671,8 @@ input, select, textarea { font-family: inherit; font-size: inherit; }
   display: flex;
   gap: 8px;
   margin-top: -60px;
+  position: relative;
+  z-index: 10;
 }
 
 /* Camera modal */

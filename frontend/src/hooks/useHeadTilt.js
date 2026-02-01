@@ -15,7 +15,13 @@ export default function useHeadTilt({ enabled, onTiltLeft, onTiltRight }) {
   const smoothedAngleRef = useRef(0)
   const lastSwipeTimeRef = useRef(0)
 
-  const [tiltDirection, setTiltDirection] = useState(null) // 'left' | 'right' | null
+  // Store callbacks in refs so they don't cause the effect to re-run
+  const onTiltLeftRef = useRef(onTiltLeft)
+  const onTiltRightRef = useRef(onTiltRight)
+  onTiltLeftRef.current = onTiltLeft
+  onTiltRightRef.current = onTiltRight
+
+  const [tiltDirection, setTiltDirection] = useState(null)
   const [tiltAngle, setTiltAngle] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -52,7 +58,6 @@ export default function useHeadTilt({ enabled, onTiltLeft, onTiltRight }) {
       setError(null)
 
       try {
-        // Acquire webcam
         const stream = await navigator.mediaDevices.getUserMedia({
           video: { width: VIDEO_WIDTH, height: VIDEO_HEIGHT, facingMode: 'user' },
         })
@@ -67,7 +72,6 @@ export default function useHeadTilt({ enabled, onTiltLeft, onTiltRight }) {
         video.srcObject = stream
         await video.play()
 
-        // Initialize FaceLandmarker
         const filesetResolver = await FilesetResolver.forVisionTasks(
           'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm'
         )
@@ -89,7 +93,6 @@ export default function useHeadTilt({ enabled, onTiltLeft, onTiltRight }) {
         landmarkerRef.current = landmarker
         setIsLoading(false)
 
-        // Detection loop
         function detect() {
           if (cancelled || !landmarkerRef.current || !videoRef.current) return
           const v = videoRef.current
@@ -102,14 +105,12 @@ export default function useHeadTilt({ enabled, onTiltLeft, onTiltRight }) {
 
           if (results.faceLandmarks && results.faceLandmarks.length > 0) {
             const landmarks = results.faceLandmarks[0]
-            // Eye landmarks: 33 (right eye outer) and 263 (left eye outer)
             const rightEye = landmarks[33]
             const leftEye = landmarks[263]
             const deltaY = leftEye.y - rightEye.y
             const deltaX = leftEye.x - rightEye.x
             const rawAngle = Math.atan2(deltaY, deltaX) * (180 / Math.PI)
 
-            // Exponential moving average smoothing
             smoothedAngleRef.current =
               EMA_FACTOR * smoothedAngleRef.current + (1 - EMA_FACTOR) * rawAngle
 
@@ -121,17 +122,14 @@ export default function useHeadTilt({ enabled, onTiltLeft, onTiltRight }) {
 
             if (Math.abs(angle) > TILT_THRESHOLD && !inCooldown) {
               if (angle < -TILT_THRESHOLD) {
-                // Head tilted right (positive roll in mirrored view)
                 setTiltDirection('right')
                 lastSwipeTimeRef.current = now
-                onTiltRight?.()
+                onTiltRightRef.current?.()
               } else if (angle > TILT_THRESHOLD) {
-                // Head tilted left (negative roll in mirrored view)
                 setTiltDirection('left')
                 lastSwipeTimeRef.current = now
-                onTiltLeft?.()
+                onTiltLeftRef.current?.()
               }
-              // Clear direction indicator after a moment
               setTimeout(() => setTiltDirection(null), 800)
             } else if (Math.abs(angle) <= TILT_THRESHOLD) {
               setTiltDirection(null)
@@ -156,7 +154,7 @@ export default function useHeadTilt({ enabled, onTiltLeft, onTiltRight }) {
       cancelled = true
       cleanup()
     }
-  }, [enabled, onTiltLeft, onTiltRight, cleanup])
+  }, [enabled, cleanup])
 
   return { videoRef, tiltDirection, tiltAngle, isLoading, error }
 }

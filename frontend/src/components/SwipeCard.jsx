@@ -1,9 +1,9 @@
-import { Palette, Music, Basketball, Leaf, Gamepad2, Drama, User } from 'lucide-react'
+import { Palette, Music, Dribbble, Leaf, Gamepad2, Drama, User } from 'lucide-react'
 
 const EMOJI_TO_ICON = {
   '🎨': Palette,
   '🎵': Music,
-  '🏀': Basketball,
+  '🏀': Dribbble,
   '🌿': Leaf,
   '🎮': Gamepad2,
   '🎭': Drama,

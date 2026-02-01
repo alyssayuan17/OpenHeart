@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Send, Mic, MicOff, Volume2, Palette, Music, Basketball, Leaf, Gamepad2, Drama, User } from 'lucide-react'
+import { Send, Mic, MicOff, Volume2, Palette, Music, Dribbble, Leaf, Gamepad2, Drama, User } from 'lucide-react'
 import { useApp } from '../context/AppContext'
 import { dummyProfiles } from '../data/dummyProfiles'
 
 const EMOJI_TO_ICON = {
   '🎨': Palette,
   '🎵': Music,
-  '🏀': Basketball,
+  '🏀': Dribbble,
   '🌿': Leaf,
   '🎮': Gamepad2,
   '🎭': Drama,

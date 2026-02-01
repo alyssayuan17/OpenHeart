@@ -132,8 +132,8 @@ const OUTFIT_ITEMS = {
   ],
   hands: [
     { id: 'black_skin', label: 'Dark', image: '/outfits/hands/black_skin.png', color: '#3B2219', square: true },
-    { id: 'brown_skin', label: 'Brown', image: '/outfits/hands/brown_skin.PNG', color: '#8D5524', square: true },
-    { id: 'white_skin', label: 'Light', image: '/outfits/hands/white_skin.PNG', color: '#FFDBAC', square: true },
+    { id: 'brown_skin', label: 'Brown', image: '/outfits/hands/brown_skin.png', color: '#8D5524', square: true },
+    { id: 'white_skin', label: 'Light', image: '/outfits/hands/white_skin.png', color: '#FFDBAC', square: true },
   ],
 }
 
@@ -360,11 +360,11 @@ export default function BodySelector({ headImage, onHeadImageChange, outfit, onO
           onChange={handleFileChange}
           hidden
         />
-        <button className="btn btn-secondary" onClick={openCamera}>
+        <button type="button" className="btn btn-secondary" onClick={openCamera}>
           <Camera size={18} />
           Take Photo
         </button>
-        <button className="btn btn-secondary" onClick={() => fileInputRef.current?.click()}>
+        <button type="button" className="btn btn-secondary" onClick={() => fileInputRef.current?.click()}>
           <Upload size={18} />
           Upload
         </button>
