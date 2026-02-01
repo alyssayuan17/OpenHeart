@@ -63,34 +63,135 @@
 
 .theme-high-contrast {
   --color-bg: #000000;
-  --color-surface: #1A1A1A;
-  --color-surface-alt: #2A2A2A;
+  --color-surface: #000000;
+  --color-surface-alt: #1A1A1A;
   --color-text: #FFFFFF;
-  --color-text-secondary: #CCCCCC;
+  --color-text-secondary: #FFFFFF;
   --color-text-on-primary: #000000;
   --color-border: #FFFFFF;
-  --color-primary: #FFD700;
-  --color-primary-hover: #FFC107;
-  --color-primary-light: #3D3200;
+  --color-primary: #FFFF00;
+  --color-primary-hover: #FFFF00;
+  --color-primary-light: #333300;
+  --color-secondary: #FFFF00;
+  --color-accent: #00FFFF;
+  --color-error: #FF0000;
+  --color-success: #00FF00;
+  --color-match: #FFFF00;
+  --color-no-match: #FFFFFF;
+}
+
+.theme-high-contrast .swipe-card {
+  border: 3px solid #FFFFFF;
+}
+
+.theme-high-contrast .btn {
+  border: 2px solid #FFFFFF;
+}
+
+.theme-high-contrast input,
+.theme-high-contrast select,
+.theme-high-contrast textarea {
+  border: 3px solid #FFFFFF !important;
+}
+
+.theme-high-contrast .match-overlay__bubble {
+  background: #FFFF00 !important;
+  border: 3px solid #FFFFFF;
+}
+
+.theme-colorblind .match-overlay__bubble {
+  background: #0173B2 !important;
+}
+
+.theme-colorblind .match-overlay__bubble::before {
+  border-right-color: #0173B2 !important;
+}
+
+.theme-colorblind .btn-primary {
+  background: #0173B2;
+}
+
+.theme-colorblind .btn-icon {
+  color: #0173B2;
+}
+
+.theme-colorblind .heartbreak-overlay__half svg {
+  fill: #CC5500;
+}
+
+.theme-high-contrast .match-overlay__bubble::before {
+  border-right-color: #FFFF00 !important;
+}
+
+.theme-high-contrast .match-overlay h1,
+.theme-high-contrast .match-overlay p {
+  color: #000000 !important;
 }
 
 .theme-colorblind {
-  --color-primary: #0072B2;
+  --color-bg: #F5F5F5;
+  --color-surface: #FFFFFF;
+  --color-surface-alt: #EFEFEF;
+  --color-text: #000000;
+  --color-text-secondary: #555555;
+  --color-text-on-primary: #FFFFFF;
+  --color-border: #CCCCCC;
+  --color-primary: #0173B2;
   --color-primary-hover: #005A8E;
-  --color-primary-light: #E0F0FF;
-  --color-secondary: #E69F00;
-  --color-accent: #009E73;
-  --color-error: #D55E00;
-  --color-success: #009E73;
-  --color-match: #0072B2;
-  --color-no-match: #999999;
+  --color-primary-light: #D4E7F5;
+  --color-secondary: #DE8F05;
+  --color-accent: #029E73;
+  --color-error: #CC5500;
+  --color-success: #029E73;
+  --color-match: #0173B2;
+  --color-no-match: #888888;
 }
 
 .theme-dyslexia {
   --font-primary: 'OpenDyslexic', 'Comic Sans MS', cursive, sans-serif;
-  --font-heading: 'OpenDyslexic', 'Comic Sans MS', cursive, sans-serif;
-  --color-bg: #FCF5E5;
-  --color-surface: #FDF8EE;
+ 
+
+.theme-dyslexia p,
+.theme-dyslexia .swipe-card__bio,
+.theme-dyslexia .chat-msg {
+  line-height: 2;
+}
+
+.theme-dyslexia .match-overlay__bubble {
+  background: #8B4789 !important;
+}
+
+.theme-dyslexia .match-overlay__bubble::before {
+  border-right-color: #8B4789 !important;
+}
+
+.theme-dyslexia .btn-primary {
+  background: #8B4789;
+}
+
+.theme-dyslexia .btn-icon {
+  color: #8B4789;
+}
+
+.theme-dyslexia .heartbreak-overlay__half svg {
+  fill: #B85450;
+} --font-heading: 'OpenDyslexic', 'Comic Sans MS', cursive, sans-serif;
+  --color-bg: #FFF8E7;
+  --color-surface: #FFFEF7;
+  --color-surface-alt: #FFF4D9;
+  --color-text: #1A1A1A;
+  --color-text-secondary: #4A4A4A;
+  --color-text-on-primary: #FFFFFF;
+  --color-border: #D4C5A9;
+  --color-primary: #8B4789;
+  --color-primary-hover: #6F3870;
+  --color-primary-light: #E8D5E7;
+  --color-secondary: #8B4789;
+  --color-accent: #4A90A4;
+  --color-error: #B85450;
+  --color-success: #5A9367;
+  --color-match: #8B4789;
+  --color-no-match: #7A7A7A;
   letter-spacing: 0.05em;
   word-spacing: 0.16em;
   line-height: 1.8;
@@ -104,11 +205,36 @@
   --font-size-xxl: 48px;
 }
 
+.theme-large-text .btn {
+  padding: 14px 28px;
+  font-size: 18px;
+}
+
+.theme-large-text .btn-icon {
+  width: 52px;
+  height: 52px;
+}
+
+.theme-large-text .swipe-card {
+  width: 550px;
+  height: 550px;
+}
+
+.theme-large-text .card-stack {
+  width: 550px;
+  height: 550px;
+}
+
 .theme-reduced-motion *,
 .theme-reduced-motion *::before,
 .theme-reduced-motion *::after {
-  animation-duration: 0s !important;
-  transition-duration: 0s !important;
+  animation-duration: 0.01s !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01s !important;
+}
+
+.theme-reduced-motion .heart-trail {
+  display: none;
 }
 
 /* ============================================
